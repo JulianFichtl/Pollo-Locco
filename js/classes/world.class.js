@@ -9,6 +9,7 @@ class World {
     bottleBar = new Bottlebar();
     throwableObjects = [];
     bottles = [];
+    isDead = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
@@ -47,7 +48,9 @@ class World {
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) {
                 if (this.character.isAboveGround()) {
-                    this.killEnemy(enemy, index);
+                    this.killEnemy(index);
+                    this.character.jump();
+                    playAudio(enemyDieSound);
                 } else {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
@@ -56,9 +59,7 @@ class World {
         });
     }
 
-    killEnemy(enemy, index) {
-        // Implement your logic to kill the enemy here
-        // For example, you can remove the enemy from the array
+    killEnemy(index) {
         this.level.enemies.splice(index, 1);
     }
 
