@@ -27,7 +27,7 @@ class World {
         setInterval(() => {
             this.checkCollisions();
             this.checkCollisionsWithBottles();
-        }, 1000);
+        }, 100);
         setInterval(() => {
             this.checkThrowobjects(); // Throw bottles
         }, 100);
@@ -44,12 +44,22 @@ class World {
     }
 
     checkCollisions() {
-        this.level.enemies.forEach((enemy) => {
+        this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) {
-                this.character.hit();
-                this.statusBar.setPercentage(this.character.energy);
+                if (this.character.isAboveGround()) {
+                    this.killEnemy(enemy, index);
+                } else {
+                    this.character.hit();
+                    this.statusBar.setPercentage(this.character.energy);
+                }
             }
         });
+    }
+
+    killEnemy(enemy, index) {
+        // Implement your logic to kill the enemy here
+        // For example, you can remove the enemy from the array
+        this.level.enemies.splice(index, 1);
     }
 
     draw() {
