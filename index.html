@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="style.css" />
+
+        <style>
+            @import url("https://fonts.googleapis.com/css2?family=Chango&family=Noto+Sans:wght@300;400;600;700&family=Poppins&display=swap");
+        </style>
+
+        <script src="./js/classes/draw-object.class.js"></script>
+        <script src="./js/classes/movableObject.class.js"></script>
+        <script src="./js/classes/character.class.js"></script>
+        <script src="./js/classes/chicken.class.js"></script>
+        <script src="./js/classes/cloud.class.js"></script>
+        <script src="./js/classes/coins.class.js"></script>
+        <script src="./js/classes/bottle.class.js"></script>
+        <script src="./js/classes/background.class.js"></script>
+        <script src="./js/classes/keyboard.class.js"></script>
+        <script src="./js/classes/status-bar.class.js"></script>
+        <script src="./js/classes/bootleBar.class.js"></script>
+        <script src="./js/classes/world.class.js"></script>
+        <script src="./js/classes/level.class.js"></script>
+        <script src="./js/classes/endboss.class.js"></script>
+        <script src="./js/classes/throwableObject.class.js"></script>
+        <script src="./js/levels/level1.js"></script>
+        <script src="./js/game.js"></script>
+        <title>El pollo loco</title>
+    </head>
+    <body onload="init()">
+        <div class="CanvasWrapper">
+            <h1 class="headline">El pollo loco</h1>
+            <canvas id="canvas" width="720" height="480"></canvas>
+            <div class="ButtonWrapper">
+                <button>Anleitung</button>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,62 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.chango-regular {
+    font-family: "Chango", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
+    font-family: "Chango", sans-serif;
+    color: white;
+}
+
+.CanvasWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url("img/5_background/background_Image_Game.jpg");
+    background-position: center;
+    background-size: cover;
+    height: 100vh;
+}
+
+.headline {
+    margin-bottom: 10px;
+    z-index: 100;
+}
+
+canvas {
+    background-color: black;
+    border-radius: 25px;
+    -webkit-box-shadow: 0px 11px 103px -35px rgba(0, 0, 0, 1);
+    -moz-box-shadow: 0px 11px 103px -35px rgba(0, 0, 0, 1);
+    box-shadow: 0px 11px 103px -35px rgba(0, 0, 0, 1);
+}
+
+.ButtonWrapper {
+    display: flex;
+    justify-content: center;
+    width: 720px;
+    margin-top: 10px;
+}
+
+button {
+    cursor: pointer;
+    height: 40px;
+    width: 150px;
+    border-radius: 4px;
+    background-color: orange;
+    border: none;
+    font-family: "Chango", sans-serif;
+    color: white;
+}
+
+button:hover {
+    background-color: rgb(226, 147, 0);
+}
