@@ -1,5 +1,6 @@
 class World {
     character = new Character();
+    movableObjects = new MovableObject();
     level = level1;
     canvas;
     ctx;
@@ -9,7 +10,6 @@ class World {
     bottleBar = new Bottlebar();
     throwableObjects = [];
     bottles = [];
-    isDead = false;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
@@ -48,9 +48,8 @@ class World {
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) {
                 if (this.character.isAboveGround()) {
-                    this.killEnemy(index);
                     this.character.jump();
-                    playAudio(enemyDieSound);
+                    this.killEnemy(enemy, index);
                 } else {
                     this.character.hit();
                     this.statusBar.setPercentage(this.character.energy);
@@ -59,8 +58,24 @@ class World {
         });
     }
 
-    killEnemy(index) {
-        this.level.enemies.splice(index, 1);
+    checkCollisionsWithGround() {
+        this.throwableObjects.forEach((throwableObject, index) => {
+            if (throwableObject.y > this.splashHeight && !throwableObject.isBreaking) {
+                throwableObject.breakAndSplash();
+                playAudio(bottleHitsGroundSound);
+            }
+            if (throwableObject.animationFinished()) {
+                this.throwableObjects.splice(index, 1);
+            }
+        });
+    }
+
+    killEnemy(enemy, index) {
+        enemy.dead = true;
+
+        setTimeout(() => {
+            this.level.enemies.splice(index, 1);
+        }, 300);
     }
 
     draw() {

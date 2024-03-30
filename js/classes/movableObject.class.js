@@ -6,6 +6,7 @@ class MovableObject extends DrawObjects {
     energy = 100;
     lastHit = 0;
     idleTime = new Date().getTime();
+    dead = false;
 
     applyGravitiy() {
         setInterval(() => {
@@ -63,7 +64,7 @@ class MovableObject extends DrawObjects {
         this.x -= this.speed;
     }
 
-    jump() {
+    jump(i) {
         this.speedY = 20;
     }
 

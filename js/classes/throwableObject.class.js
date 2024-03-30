@@ -2,6 +2,7 @@ class ThrowableObject extends MovableObject {
     isBreaking = false;
     deletable = false;
     isShooted = false;
+    offset = { x: 10, y: 10, width: -20, height: -30 };
 
     IMAGES_ROTATE = [
         "img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png",
