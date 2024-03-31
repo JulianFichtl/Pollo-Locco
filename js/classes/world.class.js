@@ -96,6 +96,7 @@ class World {
         this.addObjectsToMap(this.throwableObjects);
 
         this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.endboss);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottle);
 
