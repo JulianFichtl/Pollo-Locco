@@ -48,6 +48,16 @@ class ThrowableObject extends MovableObject {
         }, 50);
     }
 
+    animateBottle() {
+        let animationInterval = setInterval(() => {
+            if (!this.isBreaking) {
+                this.playAnimation(this.IMAGES_ROTATE);
+            } else {
+                clearInterval(animationInterval);
+            }
+        }, 50);
+    }
+
     breakAndSplash() {
         this.isBreaking = true;
         this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
@@ -61,15 +71,5 @@ class ThrowableObject extends MovableObject {
             return this.currentImageIndex === this.IMAGES_SPLASH.length - 1;
         }
         return false;
-    }
-
-    animateBottle() {
-        let animationInterval = setInterval(() => {
-            if (!this.isBreaking) {
-                this.playAnimation(this.IMAGES_ROTATE);
-            } else {
-                clearInterval(animationInterval);
-            }
-        }, 50);
     }
 }
