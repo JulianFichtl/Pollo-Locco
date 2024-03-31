@@ -1,12 +1,14 @@
 class World {
     character = new Character();
     movableObjects = new MovableObject();
+    endboss = new Endboss();
     level = level1;
     canvas;
     ctx;
     keyboard;
     camera_x = 0;
     statusBar = new StatusBar();
+    EndbossStatusBar = new EndbossStatusBar();
     bottleBar = new Bottlebar();
     coinbar = new Coinbar();
     throwableObjects = [];
@@ -29,8 +31,10 @@ class World {
     run() {
         setInterval(() => {
             this.checkCollisions();
+            this.checkCollisionWithEndboss();
             this.checkCollisionsWithBottles();
             this.checkCollisionsWithCoins();
+            this.ThrowableObjectAttack();
         }, 100);
         setInterval(() => {
             this.checkThrowobjects(); // Throw bottles
@@ -54,30 +58,58 @@ class World {
                     this.character.jump();
                     this.killEnemy(enemy, index);
                 } else {
-                    this.character.hit();
+                    this.character.hit("10");
                     this.statusBar.setPercentage(this.character.energy);
                 }
             }
         });
     }
 
-    checkCollisionsWithGround() {
-        this.throwableObjects.forEach((throwableObject, index) => {
-            if (throwableObject.y > this.splashHeight && !throwableObject.isBreaking) {
-                throwableObject.breakAndSplash();
-                playAudio(bottleHitsGroundSound);
+    checkCollisionWithEndboss() {
+        this.level.endboss.forEach((endboss) => {
+            if (this.character.isColliding(endboss)) {
+                this.character.hit();
+                this.statusBar.setPercentage(this.character.energy);
             }
-            if (throwableObject.animationFinished()) {
-                this.throwableObjects.splice(index, 1);
+        });
+    }
+
+    ThrowableObjectAttack() {
+        this.throwableObjects.forEach((throwableObject, index) => {
+            this.level.enemies.forEach((enemy, enemyIndex) => {
+                if (throwableObject.isColliding(enemy)) {
+                    this.isDead = true;
+                    this.killEnemy(enemy, enemyIndex);
+                    this.breakAndSplash();
+                    this.throwableObjects.splice(index, 1);
+                }
+            });
+
+            if (this.level.endboss) {
+                this.level.endboss.forEach((endboss, endbossIndex) => {
+                    if (throwableObject.isColliding(endboss, endbossIndex)) {
+                        this.endboss.hit("10");
+                        this.EndbossStatusBar.setPercentage(this.endboss.energy);
+                        if (this.endboss.energy == 0) {
+                            this.endbossDamage(endboss, endbossIndex);
+                        }
+                    }
+                });
             }
         });
     }
 
     killEnemy(enemy, index) {
         enemy.dead = true;
-
         setTimeout(() => {
             this.level.enemies.splice(index, 1);
+        }, 300);
+    }
+
+    endbossDamage(endboss, index) {
+        endboss.dead = true;
+        setTimeout(() => {
+            this.level.endboss.splice(index, 1);
         }, 300);
     }
 
@@ -89,9 +121,12 @@ class World {
         this.addObjectsToMap(this.level.backgroundImages);
         this.addObjectsToMap(this.level.clouds);
         this.ctx.translate(-this.camera_x, 0);
+
         this.addToMap(this.statusBar);
         this.addToMap(this.bottleBar);
         this.addToMap(this.coinbar);
+        this.addToMap(this.EndbossStatusBar);
+
         this.ctx.translate(this.camera_x, 0);
         this.addObjectsToMap(this.throwableObjects);
 

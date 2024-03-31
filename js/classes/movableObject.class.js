@@ -34,8 +34,8 @@ class MovableObject extends DrawObjects {
         return this.x < moRight && thisRight > mo.x && this.y < moBottom && thisBottom > mo.y;
     }
 
-    hit() {
-        this.energy -= 10;
+    hit(hitPoints) {
+        this.energy -= hitPoints;
         if (this.energy < 0) {
             this.energy = 0;
         } else {
@@ -49,8 +49,6 @@ class MovableObject extends DrawObjects {
         timePassed = timePassed / 1000;
         return timePassed < 1;
     }
-
-    isWaiting() {}
 
     isDead() {
         return this.energy == 0;
