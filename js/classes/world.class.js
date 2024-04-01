@@ -78,7 +78,7 @@ class World {
         this.throwableObjects.forEach((throwableObject, index) => {
             this.level.enemies.forEach((enemy, enemyIndex) => {
                 if (throwableObject.isColliding(enemy)) {
-                    this.isDead = true;
+                    this.dead = true;
                     this.killEnemy(enemy, enemyIndex);
                     this.breakAndSplash();
                     this.throwableObjects.splice(index, 1);
@@ -88,9 +88,11 @@ class World {
             if (this.level.endboss) {
                 this.level.endboss.forEach((endboss, endbossIndex) => {
                     if (throwableObject.isColliding(endboss, endbossIndex)) {
-                        this.endboss.hit("10");
+                        this.endboss.gotHit = true;
+                        this.endboss.hit("1.25");
                         this.EndbossStatusBar.setPercentage(this.endboss.energy);
                         if (this.endboss.energy == 0) {
+                            this.endboss.dead = true;
                             this.endbossDamage(endboss, endbossIndex);
                         }
                     }
