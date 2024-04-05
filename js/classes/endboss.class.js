@@ -32,7 +32,7 @@ class Endboss extends MovableObject {
     animate() {
         setInterval(() => {
             if (this.gotHit) {
-                this.playAnimation(this.IMAGES_Hurt);
+                this.playAnimation(this.IMAGES_Dead);
             } else if (this.dead) {
                 this.jump();
                 this.playAnimation(this.IMAGES_Dead);
@@ -40,7 +40,7 @@ class Endboss extends MovableObject {
         }, 50);
 
         setInterval(() => {
-            this.playAnimation(this.IMAGES_Hurt);
+            this.playAnimation(this.IMAGES_Walking);
         }, 250);
     }
 }

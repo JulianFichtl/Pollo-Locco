@@ -35,9 +35,7 @@ class World {
             this.checkCollisionsWithBottles();
             this.checkCollisionsWithCoins();
             this.ThrowableObjectAttack();
-        }, 100);
-        setInterval(() => {
-            this.checkThrowobjects(); // Throw bottles
+            this.checkThrowobjects();
         }, 100);
     }
 
@@ -87,10 +85,14 @@ class World {
 
             if (this.level.endboss) {
                 this.level.endboss.forEach((endboss, endbossIndex) => {
-                    if (throwableObject.isColliding(endboss, endbossIndex)) {
-                        this.endboss.gotHit = true;
+                    if (throwableObject.isColliding(endboss)) {
                         this.endboss.hit("1.25");
+                        this.endboss.gotHit = true;
                         this.EndbossStatusBar.setPercentage(this.endboss.energy);
+                        setTimeout(() => {
+                            this.gotHit = false;
+                        }, 1000);
+
                         if (this.endboss.energy == 0) {
                             this.endboss.dead = true;
                             this.endbossDamage(endboss, endbossIndex);

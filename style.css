@@ -42,7 +42,6 @@ canvas {
 .ButtonWrapper {
     display: flex;
     justify-content: center;
-    width: 720px;
     margin-top: 10px;
 }
 
@@ -59,4 +58,16 @@ button {
 
 button:hover {
     background-color: rgb(226, 147, 0);
+}
+
+@media only screen and (max-width: 720px) {
+    canvas {
+        width: 100%;
+    }
+}
+
+@media only screen and (max-height: 480px) {
+    canvas {
+        height: 100vh;
+    }
 }
