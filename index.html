@@ -8,7 +8,7 @@
         <style>
             @import url("https://fonts.googleapis.com/css2?family=Chango&family=Noto+Sans:wght@300;400;600;700&family=Poppins&display=swap");
         </style>
-
+        <script src="./js/fullscreenMode.js"></script>
         <script src="./js/classes/draw-object.class.js"></script>
         <script src="./js/classes/movableObject.class.js"></script>
         <script src="./js/classes/character.class.js"></script>
@@ -28,14 +28,16 @@
         <script src="./js/classes/throwableObject.class.js"></script>
         <script src="./js/levels/level1.js"></script>
         <script src="./js/game.js"></script>
+
         <title>El pollo loco</title>
     </head>
     <body onload="init()">
-        <div class="CanvasWrapper">
+        <div id="fullscreen" class="CanvasWrapper">
             <h1 class="headline">El pollo loco</h1>
             <canvas id="canvas" width="720" height="480"></canvas>
             <div class="ButtonWrapper">
                 <button>Anleitung</button>
+                <button onclick="fullscreen()">Fullscreen</button>
             </div>
         </div>
     </body>
