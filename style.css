@@ -56,8 +56,8 @@ canvas {
 
 #anleitung {
     position: absolute;
-    left: 10px;
-    bottom: 10px;
+    right: 10px;
+    top: 10px;
 }
 
 .d-none {
@@ -81,8 +81,8 @@ button {
 
 .anleitungTextWrapper {
     position: absolute;
-    left: 10px;
-    bottom: 10px;
+    right: 10px;
+    top: 10px;
     background-color: rgba(255, 255, 255);
     padding: 10px;
     border-radius: 10px;
@@ -96,7 +96,6 @@ button {
 
 .movementWrapper {
     display: flex;
-
     gap: 10px;
     padding-bottom: 10px;
 }

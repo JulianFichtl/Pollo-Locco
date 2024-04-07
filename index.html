@@ -28,7 +28,9 @@
         <script src="./js/classes/endboss.class.js"></script>
         <script src="./js/classes/throwableObject.class.js"></script>
         <script src="./js/levels/level1.js"></script>
+         <script src="./js/anleitung.js"></script>
         <script src="./js/game.js"></script>
+       
 
         <title>El pollo loco</title>
     </head>
@@ -37,11 +39,11 @@
             <h1 class="headline">El pollo loco</h1>
             <canvas id="canvas" width="720" height="480"></canvas>
             <div class="ButtonWrapper">
-                <button id="anleitung"><span class="material-symbols-outlined"> help </span></button>
+                <button onclick="anleitungOpen()" id="anleitung">Hilfe</button>
                 <button id="fullscreenButton" onclick="fullscreen()">Fullscreen</button>
                 <button id="leaveFullscreenButton" class="" onclick="exitFullscreen()">Fullscreen</button>
             </div>
-            <div id="anleitungTextWrapper" class="anleitungTextWrapper">
+            <div id="anleitungTextWrapper" class="anleitungTextWrapper d-none">
                 <h2 id="anleitungHeaderText">Anleitung</h2>
                 <div class="movementWrapper">
                     
@@ -72,7 +74,7 @@
                     Bewege Pablo mit den Pfeiltasten nach links und rechts. Springen kannst du mit der Leertaste. Sammle die Münzen ein und werfe die Flaschen mit D. Finde den Endgegner und besiege Ihn. Viel Spaß!
                 </p>
                 <div class="buttonOverlayWrapper">
-                <button id="closeAnleitung">Schließen</button>
+                <button onclick="anleitungClose()" id="closeAnleitung">Schließen</button>
                 </div>
         </div>
     </body>
