@@ -1,5 +1,6 @@
 function fullscreen() {
     let fullscreen = document.getElementById("fullscreen");
+    document.getElementById("fullscreenButton").classList.add("d-none");
     enterFullscreen(fullscreen);
 }
 
@@ -15,10 +16,11 @@ function enterFullscreen(element) {
     }
 }
 
-function exitFullscreen() {
+function exitFullscreen(document) {
     if (document.exitFullscreen) {
         document.exitFullscreen();
     } else if (document.webkitExitFullscreen) {
         document.webkitExitFullscreen();
     }
+    document.getElementById("fullscreenButton").classList.remove("d-none");
 }
