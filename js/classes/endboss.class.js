@@ -3,9 +3,20 @@ class Endboss extends MovableObject {
     width = 400;
     y = 45;
     dead = false;
-    gotHit = false;
+    hitByBottle = false;
 
     IMAGES_Walking = [
+        "img/4_enemie_boss_chicken/2_alert/G5.png",
+        "img/4_enemie_boss_chicken/2_alert/G6.png",
+        "img/4_enemie_boss_chicken/2_alert/G7.png",
+        "img/4_enemie_boss_chicken/2_alert/G8.png",
+        "img/4_enemie_boss_chicken/2_alert/G9.png",
+        "img/4_enemie_boss_chicken/2_alert/G10.png",
+        "img/4_enemie_boss_chicken/2_alert/G11.png",
+        "img/4_enemie_boss_chicken/2_alert/G12.png",
+    ];
+
+    IMAGES_Attack = [
         "img/4_enemie_boss_chicken/2_alert/G5.png",
         "img/4_enemie_boss_chicken/2_alert/G6.png",
         "img/4_enemie_boss_chicken/2_alert/G7.png",
@@ -31,16 +42,15 @@ class Endboss extends MovableObject {
 
     animate() {
         setInterval(() => {
-            if (this.gotHit) {
-                this.playAnimation(this.IMAGES_Hurt);
-            } else if (this.dead) {
-                this.jump();
+            if (this.dead) {
                 this.playAnimation(this.IMAGES_Dead);
+            } else if (this.aggressive) {
+                this.playAnimation(this.IMAGES_Attack);
+            } else if (this.hitByBottle) {
+                this.playAnimation(this.IMAGES_Hurt);
+            } else {
+                this.playAnimation(this.IMAGES_Walking);
             }
-        }, 50);
-
-        setInterval(() => {
-            this.playAnimation(this.IMAGES_Walking);
-        }, 250);
+        }, 9000 / 60);
     }
 }

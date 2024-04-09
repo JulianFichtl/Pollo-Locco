@@ -1,7 +1,7 @@
 class World {
     character = new Character();
-    movableObjects = new MovableObject();
     endboss = new Endboss();
+    movableObjects = new MovableObject();
     level = level1;
     canvas;
     ctx;
@@ -87,12 +87,8 @@ class World {
                 this.level.endboss.forEach((endboss, endbossIndex) => {
                     if (throwableObject.isColliding(endboss)) {
                         this.endboss.hit("1.25");
-                        this.endboss.gotHit = true;
                         this.EndbossStatusBar.setPercentage(this.endboss.energy);
-                        setTimeout(() => {
-                            this.gotHit = false;
-                        }, 1000);
-
+                        this.gotHitByBottle();
                         if (this.endboss.energy == 0) {
                             this.endboss.dead = true;
                             this.endbossDamage(endboss, endbossIndex);
@@ -108,6 +104,13 @@ class World {
         setTimeout(() => {
             this.level.enemies.splice(index, 1);
         }, 300);
+    }
+
+    gotHitByBottle() {
+        this.endboss.hitByBottle = true;
+        setTimeout(() => {
+            this.endboss.hitByBottle = false;
+        }, 1000);
     }
 
     endbossDamage(endboss, index) {
