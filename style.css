@@ -92,7 +92,7 @@ button {
     -webkit-box-shadow: 0px 11px 103px -35px rgba(0, 0, 0, 1);
     -moz-box-shadow: 0px 11px 103px -35px rgba(0, 0, 0, 1);
     box-shadow: 0px 11px 103px -35px rgba(0, 0, 0, 1);
-    z-index: 2;
+    z-index: 1001;
 }
 
 .movementWrapper {
@@ -125,6 +125,24 @@ button {
 
 button:hover {
     background-color: rgb(226, 147, 0);
+}
+
+#startGame {
+    position: absolute;
+    z-index: 1000;
+    bottom: 20px;
+}
+
+.startScreen {
+    width: 1250px;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    z-index: 1000;
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 11px 103px -35px rgba(0, 0, 0, 1);
+    -moz-box-shadow: 0px 11px 103px -35px rgba(0, 0, 0, 1);
+    box-shadow: 0px 11px 103px -35px rgba(0, 0, 0, 1);
 }
 
 @media only screen and (max-width: 720px) {

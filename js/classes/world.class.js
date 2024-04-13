@@ -14,6 +14,7 @@ class World {
     throwableObjects = [];
     bottles = [];
     coins = [];
+    damage = 2;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
@@ -68,6 +69,7 @@ class World {
             if (this.character.isColliding(endboss)) {
                 this.character.hit();
                 this.statusBar.setPercentage(this.character.energy);
+                this.gotHitByBottle();
             }
         });
     }
@@ -76,7 +78,7 @@ class World {
         this.throwableObjects.forEach((throwableObject, index) => {
             this.level.enemies.forEach((enemy, enemyIndex) => {
                 if (throwableObject.isColliding(enemy)) {
-                    this.dead = true;
+                    this.enddead = true;
                     this.killEnemy(enemy, enemyIndex);
                     this.breakAndSplash();
                     this.throwableObjects.splice(index, 1);
@@ -86,7 +88,7 @@ class World {
             if (this.level.endboss) {
                 this.level.endboss.forEach((endboss, endbossIndex) => {
                     if (throwableObject.isColliding(endboss)) {
-                        this.endboss.hit("1.25");
+                        this.endboss.hit(this.damage);
                         this.EndbossStatusBar.setPercentage(this.endboss.energy);
                         this.gotHitByBottle();
                         if (this.endboss.energy == 0) {
@@ -107,10 +109,12 @@ class World {
     }
 
     gotHitByBottle() {
+        console.log("Endboss hit by bottle");
         this.endboss.hitByBottle = true;
+        this.endboss.playAnimation(this.endboss.IMAGES_Hurt);
         setTimeout(() => {
             this.endboss.hitByBottle = false;
-        }, 1000);
+        }, 12000 / 60);
     }
 
     endbossDamage(endboss, index) {
@@ -125,7 +129,7 @@ class World {
 
         this.ctx.translate(this.camera_x, 0);
 
-        this.addObjectsToMap(this.level.backgroundImages);
+        this.addObjectsToMap(this.level.backgroundObjects);
         this.addObjectsToMap(this.level.clouds);
         this.ctx.translate(-this.camera_x, 0);
 
