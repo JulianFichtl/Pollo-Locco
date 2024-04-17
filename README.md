@@ -1,4 +1,4 @@
-El Pollo Loco
+# El Pollo Loco
 
 OOP Jump and Run Game in JavaScript.
 
