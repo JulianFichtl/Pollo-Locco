@@ -14,7 +14,9 @@ class World {
     throwableObjects = [];
     bottles = [];
     coins = [];
-    damage = 2;
+    damage = 5;
+    hitEnemy = 10;
+    splash = 350;
 
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
@@ -38,6 +40,9 @@ class World {
             this.ThrowableObjectAttack();
             this.checkThrowobjects();
         }, 100);
+        setInterval(() => {
+            this.checkCollisionsWithGround();
+        }, 20);
     }
 
     checkThrowobjects() {
@@ -57,7 +62,7 @@ class World {
                     this.character.jump();
                     this.killEnemy(enemy, index);
                 } else {
-                    this.character.hit("10");
+                    this.character.hit(this.hitEnemy);
                     this.statusBar.setPercentage(this.character.energy);
                 }
             }
@@ -78,10 +83,11 @@ class World {
         this.throwableObjects.forEach((throwableObject, index) => {
             this.level.enemies.forEach((enemy, enemyIndex) => {
                 if (throwableObject.isColliding(enemy)) {
-                    this.enddead = true;
                     this.killEnemy(enemy, enemyIndex);
-                    this.breakAndSplash();
-                    this.throwableObjects.splice(index, 1);
+                    this.throwableObjects[index].breakAndSplash();
+                    setTimeout(() => {
+                        this.throwableObjects.splice(index, 1);
+                    }, 250);
                 }
             });
 
@@ -89,9 +95,14 @@ class World {
                 this.level.endboss.forEach((endboss, endbossIndex) => {
                     if (throwableObject.isColliding(endboss)) {
                         this.endboss.hit(this.damage);
+                        this.throwableObjects[index].breakAndSplash();
+                        this.endboss.bossIsHurt();
+                        setTimeout(() => {
+                            this.throwableObjects.splice(index, 1);
+                        }, 250);
                         this.EndbossStatusBar.setPercentage(this.endboss.energy);
-                        this.gotHitByBottle();
                         if (this.endboss.energy == 0) {
+                            this.throwableObjects[index].breakAndSplash();
                             this.endboss.dead = true;
                             this.endbossDamage(endboss, endbossIndex);
                         }
@@ -103,6 +114,7 @@ class World {
 
     killEnemy(enemy, index) {
         enemy.dead = true;
+
         setTimeout(() => {
             this.level.enemies.splice(index, 1);
         }, 300);
@@ -111,10 +123,9 @@ class World {
     gotHitByBottle() {
         console.log("Endboss hit by bottle");
         this.endboss.hitByBottle = true;
-        this.endboss.playAnimation(this.endboss.IMAGES_Hurt);
         setTimeout(() => {
             this.endboss.hitByBottle = false;
-        }, 12000 / 60);
+        }, 10000);
     }
 
     endbossDamage(endboss, index) {
@@ -233,6 +244,18 @@ class World {
                 setTimeout(() => {
                     this.lastJump = false;
                 }, 700);
+            }
+        });
+    }
+
+    checkCollisionsWithGround() {
+        this.throwableObjects.forEach((throwableObject, index) => {
+            if (throwableObject.y > this.splash && !throwableObject.isBreaking) {
+                this.throwableObjects[index].breakAndSplash();
+                playAudio(bottleHitsGroundSound);
+            }
+            if (throwableObject.animationFinished()) {
+                this.throwableObjects.splice(index, 1);
             }
         });
     }

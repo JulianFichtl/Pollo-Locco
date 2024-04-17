@@ -2,7 +2,6 @@ class ThrowableObject extends MovableObject {
     isBreaking = false;
     deletable = false;
     isShooted = false;
-    offset = { x: 10, y: 10, width: -20, height: -30 };
 
     IMAGES_ROTATE = [
         "img/6_salsa_bottle/bottle_rotation/1_bottle_rotation.png",
@@ -27,8 +26,8 @@ class ThrowableObject extends MovableObject {
 
     constructor(x, y, getDirection) {
         super().loadImage("img/6_salsa_bottle/salsa_bottle.png");
-        this.loadImages(this.IMAGES_BOTTLE_SPLASH);
         this.loadImages(this.IMAGES_ROTATE);
+        this.loadImages(this.IMAGES_BOTTLE_SPLASH);
         this.x = x;
         this.y = y;
         this.otherDirection = getDirection;

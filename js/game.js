@@ -10,8 +10,12 @@ function init() {
     initLevel();
     canvas = document.getElementById("canvas");
     world = new World(canvas, keyboard);
-    console.log("My Character is", world.character);
+    this.closeStartScreen();
+}
+
+function closeStartScreen() {
     document.getElementById("startScreen").style.display = "none";
+    document.getElementById("startScreenBackground").style.display = "none";
     document.getElementById("startGame").style.display = "none";
 }
 
