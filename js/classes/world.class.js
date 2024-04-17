@@ -42,6 +42,7 @@ class World {
         }, 100);
         setInterval(() => {
             this.checkCollisionsWithGround();
+            this.checkEndbossArea();
         }, 20);
     }
 
@@ -96,7 +97,7 @@ class World {
                     if (throwableObject.isColliding(endboss)) {
                         this.endboss.hit(this.damage);
                         this.throwableObjects[index].breakAndSplash();
-                        this.endboss.bossIsHurt();
+                        this.gotHitByBottle();
                         setTimeout(() => {
                             this.throwableObjects.splice(index, 1);
                         }, 250);
@@ -112,6 +113,15 @@ class World {
         });
     }
 
+    checkEndbossArea() {
+        if (this.character.x > this.level.endboss[0].x - 400) {
+            this.level.endboss[0].isEntering = true;
+            console.warn("Endboss is entering:", this.endboss.isEntering, this.endbossAttack);
+        } else if (this.character.x < this.level.endboss[0].x - 400) {
+            this.level.endboss[0].isEntering = false;
+        }
+    }
+
     killEnemy(enemy, index) {
         enemy.dead = true;
 
@@ -121,11 +131,10 @@ class World {
     }
 
     gotHitByBottle() {
-        console.log("Endboss hit by bottle");
-        this.endboss.hitByBottle = true;
+        this.level.endboss[0].hitByBottle = true;
         setTimeout(() => {
-            this.endboss.hitByBottle = false;
-        }, 10000);
+            this.level.endboss[0].hitByBottle = false;
+        }, 500);
     }
 
     endbossDamage(endboss, index) {
@@ -150,10 +159,10 @@ class World {
         this.addToMap(this.EndbossStatusBar);
 
         this.ctx.translate(this.camera_x, 0);
-        this.addObjectsToMap(this.throwableObjects);
 
         this.addObjectsToMap(this.level.enemies);
         this.addObjectsToMap(this.level.endboss);
+        this.addObjectsToMap(this.throwableObjects);
         this.addObjectsToMap(this.level.coins);
         this.addObjectsToMap(this.level.bottle);
 
