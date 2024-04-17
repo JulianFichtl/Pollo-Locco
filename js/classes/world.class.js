@@ -71,11 +71,10 @@ class World {
     }
 
     checkCollisionWithEndboss() {
-        this.level.endboss.forEach((endboss) => {
+        this.level.endboss.forEach((endboss, index) => {
             if (this.character.isColliding(endboss)) {
-                this.character.hit();
+                this.character.hit(this.hitEnemy);
                 this.statusBar.setPercentage(this.character.energy);
-                this.gotHitByBottle();
             }
         });
     }
@@ -116,7 +115,6 @@ class World {
     checkEndbossArea() {
         if (this.character.x > this.level.endboss[0].x - 400) {
             this.level.endboss[0].isEntering = true;
-            console.warn("Endboss is entering:", this.endboss.isEntering, this.endbossAttack);
         } else if (this.character.x < this.level.endboss[0].x - 400) {
             this.level.endboss[0].isEntering = false;
         }
@@ -124,17 +122,24 @@ class World {
 
     killEnemy(enemy, index) {
         enemy.dead = true;
-
         setTimeout(() => {
             this.level.enemies.splice(index, 1);
         }, 300);
     }
 
     gotHitByBottle() {
-        this.level.endboss[0].hitByBottle = true;
-        setTimeout(() => {
-            this.level.endboss[0].hitByBottle = false;
-        }, 500);
+        if (this.level.endboss[0].isEntering) {
+            this.level.endboss[0].isEntering = false;
+            this.level.endboss[0].hitByBottle = true;
+            setTimeout(() => {
+                this.level.endboss[0].hitByBottle = false;
+            }, 500);
+        } else {
+            this.level.endboss[0].hitByBottle = true;
+            setTimeout(() => {
+                this.level.endboss[0].hitByBottle = false;
+            }, 500);
+        }
     }
 
     endbossDamage(endboss, index) {
