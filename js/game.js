@@ -19,6 +19,10 @@ function closeStartScreen() {
     document.getElementById("startGame").style.display = "none";
 }
 
+function restartGame() {
+    window.location.reload();
+}
+
 document.addEventListener("keydown", (e) => {
     if (e.code == "ArrowRight") {
         keyboard.RIGHT = true;

@@ -40,6 +40,7 @@ class World {
             this.ThrowableObjectAttack();
             this.checkThrowobjects();
             this.checkEndbossDead();
+            this.checkCharacterDead();
         }, 100);
         setInterval(() => {
             this.checkCollisionsWithGround();
@@ -72,8 +73,14 @@ class World {
     }
 
     checkEndbossDead() {
-        if (this.level.endboss[0].dead) {
-            document.getElementById("EndscreenContent").classList.remove("none");
+        if (this.level.endboss[0]?.dead) {
+            document.getElementById("EndscreenContentWON").classList.remove("none");
+        }
+    }
+
+    checkCharacterDead() {
+        if (this.character.energy == 0) {
+            document.getElementById("EndscreenContentLOST").classList.remove("none");
         }
     }
 

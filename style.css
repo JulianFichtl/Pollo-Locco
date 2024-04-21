@@ -141,7 +141,6 @@ button:hover {
 }
 
 #startGame {
-    position: absolute;
     z-index: 1000;
     bottom: 20px;
 }
@@ -169,14 +168,15 @@ button:hover {
     box-shadow: 0px 11px 103px -35px rgba(0, 0, 0, 1);
 }
 
-#youLost {
-    width: 100%;
-    height: 100%;
+#youWon {
+    width: 25%;
+    height: 25%;
 }
 
 .Endscreen {
     z-index: 5000;
     display: flex;
+    flex-direction: column;
     position: absolute;
     top: 0;
     left: 0;
@@ -184,16 +184,51 @@ button:hover {
     height: 100%;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.75);
+}
+
+#restartButton {
+    margin-top: 40px;
+    bottom: 20px;
+    z-index: 1000;
 }
 
 .none {
     display: none;
 }
 
+.noMobileScreen {
+    display: none;
+}
+
+.sound {
+    z-index: 5000;
+}
+
 @media only screen and (max-width: 720px) {
     canvas {
         width: calc(100% - 24px);
+    }
+
+    .mobileDeclindedScreen {
+        background-color: #db2d0a;
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        z-index: 5000;
+    }
+
+    .noMobileScreen {
+        text-align: center;
+        font-size: 16px;
+        color: white;
+        height: 30px;
+        width: 100%;
+        display: flex;
+        justify-content: center;
     }
 }
 
