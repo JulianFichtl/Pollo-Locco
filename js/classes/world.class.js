@@ -63,6 +63,7 @@ class World {
             if (this.character.isColliding(enemy)) {
                 if (this.character.isAboveGround()) {
                     this.character.jump();
+                    playSound(jumpOnChicken);
                     this.killEnemy(enemy, index);
                 } else {
                     this.character.hit(this.hitEnemy);
@@ -234,7 +235,7 @@ class World {
                 this.bottles++;
                 this.level.bottle.splice(index, 1);
                 this.bottleBar.setPercentage(this.bottles);
-                playAudio(bottleCollectSound);
+                playSound(bottleCollectSound);
             }
         });
     }
@@ -245,7 +246,7 @@ class World {
                 this.coins++;
                 this.level.coins.splice(index, 1);
                 this.coinbar.setPercentage(this.coins);
-                playAudio(bottleCollectSound);
+                playSound(coinCollect);
             }
         });
     }
