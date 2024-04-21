@@ -91,7 +91,11 @@ class World {
             if (this.character.isColliding(endboss)) {
                 this.character.hit(this.hitEnemy);
                 this.statusBar.setPercentage(this.character.energy);
-                playSound(ouch);
+                if (this.character.energy > 0) {
+                    this.character.hit(this.hitEnemy);
+                    this.statusBar.setPercentage(this.character.energy);
+                    playSound(ouch);
+                }
             }
         });
     }
@@ -135,6 +139,7 @@ class World {
         if (this.level.endboss && this.level.endboss.length > 0) {
             if (this.character.x > this.level.endboss[0].x - 400) {
                 this.level.endboss[0].isEntering = true;
+                playSound(angryEndboss);
             } else if (this.character.x < this.level.endboss[0].x - 400) {
                 this.level.endboss[0].isEntering = false;
             }
