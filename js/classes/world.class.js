@@ -65,9 +65,10 @@ class World {
                     this.character.jump();
                     playSound(jumpOnChicken);
                     this.killEnemy(enemy, index);
-                } else {
+                } else if (this.character.energy > 0) {
                     this.character.hit(this.hitEnemy);
                     this.statusBar.setPercentage(this.character.energy);
+                    playSound(ouch);
                 }
             }
         });
@@ -90,6 +91,7 @@ class World {
             if (this.character.isColliding(endboss)) {
                 this.character.hit(this.hitEnemy);
                 this.statusBar.setPercentage(this.character.energy);
+                playSound(ouch);
             }
         });
     }
@@ -100,6 +102,7 @@ class World {
                 if (throwableObject.isColliding(enemy)) {
                     this.killEnemy(enemy, enemyIndex);
                     this.throwableObjects[index].breakAndSplash();
+                    playSound(bottleSmash);
                     setTimeout(() => {
                         this.throwableObjects.splice(index, 1);
                     }, 250);
@@ -112,6 +115,7 @@ class World {
                         this.endboss.hit(this.damage);
                         this.throwableObjects[index].breakAndSplash();
                         this.gotHitByBottle();
+                        playSound(bottleSmash);
                         setTimeout(() => {
                             this.throwableObjects.splice(index, 1);
                         }, 250);

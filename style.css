@@ -193,6 +193,20 @@ button:hover {
     z-index: 1000;
 }
 
+#soundOff {
+    position: absolute;
+    right: 100px;
+    top: 10px;
+    z-index: 1001;
+}
+
+#soundOn {
+    position: absolute;
+    right: 100px;
+    top: 10px;
+    z-index: 1001;
+}
+
 .none {
     display: none;
 }

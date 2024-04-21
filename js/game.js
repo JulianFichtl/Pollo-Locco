@@ -11,6 +11,7 @@ function init() {
     canvas = document.getElementById("canvas");
     world = new World(canvas, keyboard);
     this.closeStartScreen();
+    playBackgroundMusic(backGroundMusic);
 }
 
 function closeStartScreen() {
