@@ -47,11 +47,11 @@ class Endboss extends MovableObject {
         setInterval(() => {
             if (this.dead) {
                 this.playAnimation(this.IMAGES_Dead);
+            } else if (this.hitByBottle) {
+                this.playAnimation(this.IMAGES_Hurt);
             } else if (this.isEntering) {
                 this.playAnimation(this.IMAGES_Attack);
                 this.moveLeft();
-            } else if (this.hitByBottle) {
-                this.playAnimation(this.IMAGES_Hurt);
             } else {
                 this.playAnimation(this.IMAGES_Walking);
             }

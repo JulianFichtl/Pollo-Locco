@@ -43,9 +43,7 @@
             <button id="startGame" onclick="startGame()">Start Game</button>
             <div class="ButtonWrapper">
                 <div id="soundOption" class="soundOption"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-                <span class="material-symbols-outlined">
-volume_up
-</span></div>
+                <span class="material-symbols-outlined">volume_up</span></div>
                 <button onclick="anleitungOpen()" id="anleitung">Hilfe</button>
                 <button id="fullscreenButton" onclick="fullscreen()">Fullscreen</button>
                 <button id="leaveFullscreenButton" class="d-none" onclick="leaveFullscreen()">Close Fullscreen</button>
@@ -83,6 +81,9 @@ volume_up
                 <div class="buttonOverlayWrapper">
                 <button onclick="anleitungClose()" id="closeAnleitung">Schließen</button>
                 </div>
-        </div>
+            </div>
+            <div id="EndscreenContent" class="Endscreen none">
+                   <img id="youLost" src="img/9_intro_outro_screens/game_over/you lost.png" alt="">
+            </div>
     </body>
 </html>

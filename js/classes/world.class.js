@@ -39,6 +39,7 @@ class World {
             this.checkCollisionsWithCoins();
             this.ThrowableObjectAttack();
             this.checkThrowobjects();
+            this.checkEndbossDead();
         }, 100);
         setInterval(() => {
             this.checkCollisionsWithGround();
@@ -68,6 +69,12 @@ class World {
                 }
             }
         });
+    }
+
+    checkEndbossDead() {
+        if (this.level.endboss[0].dead) {
+            document.getElementById("EndscreenContent").classList.remove("none");
+        }
     }
 
     checkCollisionWithEndboss() {
@@ -113,10 +120,12 @@ class World {
     }
 
     checkEndbossArea() {
-        if (this.character.x > this.level.endboss[0].x - 400) {
-            this.level.endboss[0].isEntering = true;
-        } else if (this.character.x < this.level.endboss[0].x - 400) {
-            this.level.endboss[0].isEntering = false;
+        if (this.level.endboss && this.level.endboss.length > 0) {
+            if (this.character.x > this.level.endboss[0].x - 400) {
+                this.level.endboss[0].isEntering = true;
+            } else if (this.character.x < this.level.endboss[0].x - 400) {
+                this.level.endboss[0].isEntering = false;
+            }
         }
     }
 
@@ -128,16 +137,17 @@ class World {
     }
 
     gotHitByBottle() {
-        if (this.level.endboss[0].isEntering) {
-            this.level.endboss[0].isEntering = false;
-            this.level.endboss[0].hitByBottle = true;
+        if (this.level.endboss && this.level.endboss.length > 0 && this.level.endboss[0]) {
+            let firstEndboss = this.level.endboss[0];
+
+            if (firstEndboss.isEntering) {
+                firstEndboss.isEntering = false;
+            }
+            firstEndboss.hitByBottle = true;
             setTimeout(() => {
-                this.level.endboss[0].hitByBottle = false;
-            }, 500);
-        } else {
-            this.level.endboss[0].hitByBottle = true;
-            setTimeout(() => {
-                this.level.endboss[0].hitByBottle = false;
+                if (firstEndboss) {
+                    firstEndboss.hitByBottle = false;
+                }
             }, 500);
         }
     }

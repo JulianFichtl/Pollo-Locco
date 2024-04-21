@@ -25,10 +25,10 @@ class DrawObjects {
     }
 
     drawFrame(ctx) {
-        if (this instanceof Character || this instanceof Chicken || this instanceof ThrowableObject || this instanceof Bottle || this instanceof Coins || this instanceof Endboss) {
+        if (this instanceof ThrowableObject) {
             ctx.beginPath();
-            ctx.lineWidth = "1";
-            ctx.strokeStyle = "blue";
+            ctx.lineWidth = "";
+            ctx.strokeStyle = "transparent";
             ctx.rect(this.x, this.y, this.width, this.height);
             ctx.stroke();
         }
