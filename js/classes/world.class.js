@@ -193,12 +193,12 @@ class World {
         }
     }
 
-    // Kills the end boss and removes it from the game world.
+    // Kills the end boss and removes it from the game world - Stop Sound after killing
     endbossDamage(endboss, index) {
         endboss.dead = true;
         setTimeout(() => {
             this.level.endboss.splice(index, 1);
-            pauseSound;
+            pauseSound(angryEndboss);
         }, 300);
     }
 

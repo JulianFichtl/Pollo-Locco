@@ -37,9 +37,6 @@ function playBackgroundMusic(audio) {
 // Pause background music toggle function
 function pauseBackgroundMusic(audio) {
     soundOn = false;
-    sounds.forEach((audio) => {
-        audio.pause();
-    });
     audio.pause();
     document.getElementById("soundOff").classList.remove("none");
     document.getElementById("soundOn").classList.add("none");

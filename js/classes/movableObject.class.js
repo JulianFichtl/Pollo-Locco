@@ -2,7 +2,7 @@ class MovableObject extends DrawObjects {
     speed = 0.15;
     otherDirection = false;
     speedY = 0;
-    acceleration = 1;
+    acceleration = 2;
     energy = 100;
     lastHit = 0;
     idleTime = new Date().getTime();
@@ -70,7 +70,7 @@ class MovableObject extends DrawObjects {
 
     // Handles object animation jumping
     jump(i) {
-        this.speedY = 20;
+        this.speedY = 30;
     }
 
     // Handles object animation looping images
