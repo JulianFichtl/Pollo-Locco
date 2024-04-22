@@ -6,7 +6,7 @@ bottleCollectSound = new Audio("audio/collectBottle.mp3");
 coinCollect = new Audio("audio/coinCollect.mp3");
 ouch = new Audio("audio/ouch.mp3");
 bottleSmash = new Audio("audio/bottleSmash.mp3");
-backGroundMusic = new Audio("audio/backgroundMusic.mp3");
+backGroundMusic = new Audio("audio/backgroundAudio.mp3");
 angryEndboss = new Audio("audio/angryEndboss.mp3");
 
 // Sound on/off

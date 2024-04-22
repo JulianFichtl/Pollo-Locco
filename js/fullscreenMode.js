@@ -13,6 +13,14 @@ function leaveFullscreen() {
     exitFullscreen(document);
 }
 
+// Close fullscreen on ESC key press
+document.addEventListener("keydown", function (event) {
+    if (event.key === "Escape") {
+        document.getElementById("fullscreenButton").classList.remove("d-none");
+        document.getElementById("leaveFullscreenButton").classList.add("d-none");
+    }
+});
+
 // Fullscreen mode
 function enterFullscreen(element) {
     if (element.requestFullscreen) {
