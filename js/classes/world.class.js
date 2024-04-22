@@ -15,7 +15,7 @@ class World {
     bottles = [];
     coins = [];
     damage = 5;
-    hitEnemy = 10;
+    hitbyEnemy = 10;
     splash = 350;
 
     constructor(canvas, keyboard) {
@@ -49,12 +49,15 @@ class World {
     }
 
     checkThrowobjects() {
-        if (this.keyboard.D && this.bottles > 0) {
+        if (this.keyboard.D && this.bottles > 0 && !this.isThrowing) {
+            this.isThrowing = true;
             this.bottles--;
             this.bottleBar.setPercentage(this.bottles);
             console.log(this.bottles);
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, this.character.otherDirection);
             this.throwableObjects.push(bottle);
+        } else if (!this.keyboard.D) {
+            this.isThrowing = false;
         }
     }
 
@@ -65,10 +68,14 @@ class World {
                     this.character.jump();
                     playSound(jumpOnChicken);
                     this.killEnemy(enemy, index);
-                } else if (this.character.energy > 0) {
-                    this.character.hit(this.hitEnemy);
+                } else if (this.character.energy > 0 && !this.character.isHit) {
+                    this.character.hit(this.hitbyEnemy);
                     this.statusBar.setPercentage(this.character.energy);
                     playSound(ouch);
+                    this.character.isHit = true;
+                    setTimeout(() => {
+                        this.character.isHit = false;
+                    }, 2000);
                 }
             }
         });
@@ -87,15 +94,15 @@ class World {
     }
 
     checkCollisionWithEndboss() {
-        this.level.endboss.forEach((endboss, index) => {
-            if (this.character.isColliding(endboss)) {
-                this.character.hit(this.hitEnemy);
+        this.level.endboss.forEach((endboss) => {
+            if (this.character.isColliding(endboss) && !this.character.isHit) {
+                this.character.hit(this.hitbyEnemy);
                 this.statusBar.setPercentage(this.character.energy);
-                if (this.character.energy > 0) {
-                    this.character.hit(this.hitEnemy);
-                    this.statusBar.setPercentage(this.character.energy);
-                    playSound(ouch);
-                }
+                playSound(ouch);
+                this.character.isHit = true;
+                setTimeout(() => {
+                    this.character.isHit = false;
+                }, 2000);
             }
         });
     }
@@ -173,6 +180,7 @@ class World {
         endboss.dead = true;
         setTimeout(() => {
             this.level.endboss.splice(index, 1);
+            pauseSound(angryEndboss);
         }, 300);
     }
 

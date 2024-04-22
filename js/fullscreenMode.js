@@ -1,5 +1,5 @@
 function fullscreen() {
-    let fullscreen = document.getElementById("fullscreen");
+    let fullscreen = document.getElementById("canvas");
     document.getElementById("fullscreenButton").classList.add("d-none");
     document.getElementById("leaveFullscreenButton").classList.remove("d-none");
     enterFullscreen(fullscreen);
