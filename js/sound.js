@@ -1,3 +1,4 @@
+// Sounds
 jumpOnChicken = new Audio("audio/jump_on_chicken.mp3");
 walking_sound = new Audio("audio/walking.mp3");
 jumping_sound = new Audio("audio/jumping.mp3");
@@ -8,10 +9,10 @@ bottleSmash = new Audio("audio/bottleSmash.mp3");
 backGroundMusic = new Audio("audio/backgroundMusic.mp3");
 angryEndboss = new Audio("audio/angryEndboss.mp3");
 
-sounds = [jumpOnChicken, walking_sound, jumping_sound, bottleCollectSound, coinCollect, ouch, bottleSmash, backGroundMusic, angryEndboss];
-
+// Sound on/off
 soundOn = true;
 
+// Play sound function
 function playSound(audio) {
     if (soundOn) {
         audio.play();
@@ -19,10 +20,12 @@ function playSound(audio) {
     }
 }
 
+// Pause sound function
 function pauseSound(audio) {
     audio.pause();
 }
 
+// Play background music toggle function
 function playBackgroundMusic(audio) {
     soundOn = true;
     audio.loop = true;
@@ -31,7 +34,7 @@ function playBackgroundMusic(audio) {
     document.getElementById("soundOff").classList.add("none");
     document.getElementById("soundOn").classList.remove("none");
 }
-
+// Pause background music toggle function
 function pauseBackgroundMusic(audio) {
     soundOn = false;
     sounds.forEach((audio) => {

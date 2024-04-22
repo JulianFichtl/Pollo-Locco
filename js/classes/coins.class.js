@@ -1,6 +1,7 @@
 class Coins extends MovableObject {
     IMAGES_COINS = ["img/8_coin/coin_1.png", "img/8_coin/coin_2.png"];
 
+    // Coins constructor
     constructor() {
         super();
         this.x = 200 + Math.random() * 3000;
@@ -12,6 +13,7 @@ class Coins extends MovableObject {
         this.animate();
     }
 
+    // Handles coin logic
     animate() {
         setInterval(() => {
             let i = this.currentImage % this.IMAGES_COINS.length;

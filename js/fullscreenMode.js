@@ -1,3 +1,4 @@
+// Enter Fullscreen mode
 function fullscreen() {
     let fullscreen = document.getElementById("canvas");
     document.getElementById("fullscreenButton").classList.add("d-none");
@@ -5,12 +6,14 @@ function fullscreen() {
     enterFullscreen(fullscreen);
 }
 
+// Leave Fullscreen mode
 function leaveFullscreen() {
     document.getElementById("fullscreenButton").classList.remove("d-none");
     document.getElementById("leaveFullscreenButton").classList.add("d-none");
     exitFullscreen(document);
 }
 
+// Fullscreen mode
 function enterFullscreen(element) {
     if (element.requestFullscreen) {
         element.requestFullscreen();
@@ -21,6 +24,7 @@ function enterFullscreen(element) {
     }
 }
 
+// Exit Fullscreen mode
 function exitFullscreen(document) {
     if (document.exitFullscreen) {
         document.exitFullscreen();

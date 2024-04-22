@@ -1,3 +1,4 @@
+// Description: This class is responsible for the character's behavior and animations.
 class Character extends MovableObject {
     y = 0;
     width = 150;
@@ -64,6 +65,7 @@ class Character extends MovableObject {
 
     world;
 
+    // The constructor method is a special method for creating and initializing an object created within a class.
     constructor() {
         super().loadImage("img/2_character_pepe/2_walk/W-21.png");
         this.loadImages(this.IMAGES_Walking);
@@ -76,6 +78,7 @@ class Character extends MovableObject {
         this.animate();
     }
 
+    // The animate method is responsible for the character's behavior and animations.
     animate() {
         setInterval(() => {
             pauseSound(walking_sound);

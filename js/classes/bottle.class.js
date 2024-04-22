@@ -4,6 +4,7 @@ class Bottle extends MovableObject {
     y = 320;
     brokenBottle = false;
 
+    // Bottle constructor
     constructor() {
         super();
         this.x = 200 + Math.random() * 3000;
@@ -12,6 +13,7 @@ class Bottle extends MovableObject {
         this.animate();
     }
 
+    // Handles bottle logic
     animate() {
         setInterval(() => {
             this.playAnimation(this.IMAGES_Bottles);

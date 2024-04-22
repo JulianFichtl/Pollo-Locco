@@ -7,15 +7,18 @@ class DrawObjects {
     height = 100;
     width = 100;
 
+    // Loads an image
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
     }
 
+    // Draws an image
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
+    // Loads multiple images
     loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();
@@ -24,6 +27,7 @@ class DrawObjects {
         });
     }
 
+    // Draws a frame
     drawFrame(ctx) {
         if (this instanceof ThrowableObject) {
             ctx.beginPath();

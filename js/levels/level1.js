@@ -1,5 +1,6 @@
 let level1;
 
+// Initializes the level1 of the game - Set all objects in the level
 function initLevel() {
     level1 = new Level(
         [new Chicken(), new Chicken(), new Chicken(), new Chicken(), new Chicken(), new Chicken()],

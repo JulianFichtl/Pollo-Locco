@@ -1,3 +1,4 @@
+// Definition of the Keyboard class
 class Keyboard {
     LEFT = false;
     RIGHT = false;
