@@ -45,8 +45,6 @@ document.addEventListener("keydown", (e) => {
     if (e.code == "KeyD") {
         keyboard.D = true;
     }
-
-    console.log(e);
 });
 // The initLevel function initializes the level.
 document.addEventListener("keyup", (e) => {
@@ -68,5 +66,4 @@ document.addEventListener("keyup", (e) => {
     if (e.code == "KeyD") {
         keyboard.D = false;
     }
-    console.log(e);
 });

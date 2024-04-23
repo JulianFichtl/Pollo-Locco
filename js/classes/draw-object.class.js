@@ -29,12 +29,10 @@ class DrawObjects {
 
     // Draws a frame
     drawFrame(ctx) {
-        if (this instanceof ThrowableObject) {
-            ctx.beginPath();
-            ctx.lineWidth = "";
-            ctx.strokeStyle = "transparent";
-            ctx.rect(this.x, this.y, this.width, this.height);
-            ctx.stroke();
-        }
+        ctx.beginPath();
+        ctx.lineWidth = "";
+        ctx.strokeStyle = "transparent";
+        ctx.rect(this.x - 100, this.y, this.width, this.height);
+        ctx.stroke();
     }
 }
