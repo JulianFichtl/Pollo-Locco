@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: classes/world.class.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: classes/world.class.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>class World {
+    character = new Character();
+    endboss = new Endboss();
+    movableObjects = new MovableObject();
+    level = level1;
+    canvas;
+    ctx;
+    keyboard;
+    camera_x = 0;
+    statusBar = new StatusBar();
+    EndbossStatusBar = new EndbossStatusBar();
+    bottleBar = new Bottlebar();
+    coinbar = new Coinbar();
+    throwableObjects = [];
+    bottles = [];
+    coins = [];
+    damage = 5;
+    hitbyEnemy = 20;
+    hitbyEndboss = 50;
+    splash = 350;
+
+    /**
+     * Represents a World object.
+     * @constructor
+     * @param {HTMLCanvasElement} canvas - The canvas element to draw on.
+     * @param {Keyboard} keyboard - The keyboard object for handling user input.
+     */
+    constructor(canvas, keyboard) {
+        this.ctx = canvas.getContext("2d");
+        this.canvas = canvas;
+        this.keyboard = keyboard;
+        this.draw();
+        this.setWorld();
+        this.run();
+    }
+
+    /**
+     * Links the world context to the character, allowing interactions between the character and the world.
+     */
+    setWorld() {
+        this.character.world = this;
+    }
+
+    /**
+     * Starts the main game loops for checking collisions and environment interactions.
+     */
+    run() {
+        setInterval(() => {
+            this.checkCollisions();
+            this.checkCollisionWithEndboss();
+            this.checkCollisionsWithBottles();
+            this.checkCollisionsWithCoins();
+            this.ThrowableObjectAttack();
+            this.checkThrowobjects();
+            this.checkEndbossDead();
+            this.checkCharacterDead();
+        }, 100);
+        setInterval(() => {
+            this.checkCollisionsWithGround();
+            this.checkEndbossArea();
+        }, 20);
+    }
+
+    /**
+     * Handles the action of throwing a bottle by the character.
+     */
+    checkThrowobjects() {
+        if (this.keyboard.D &amp;&amp; this.bottles > 0 &amp;&amp; !this.isThrowing &amp;&amp; !this.throwTimeout) {
+            this.isThrowing = true;
+            this.bottles--;
+            this.bottleBar.setPercentage(this.bottles);
+            console.log(this.bottles);
+            let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, this.character.otherDirection);
+            this.throwableObjects.push(bottle);
+            this.throwTimeout = setTimeout(() => {
+                this.isThrowing = false;
+                this.throwTimeout = null;
+            }, 600);
+        }
+    }
+
+    /**
+     * Checks for and handles collisions between the character and enemies.
+     */
+    checkCollisions() {
+        this.level.enemies.forEach((enemy, index) => {
+            if (this.character.isColliding(enemy)) {
+                if (this.character.isAboveGround() &amp;&amp; this.character.y &lt; enemy.y + 75) {
+                    this.character.jump();
+                    playSound(jumpOnChicken);
+                    this.killEnemy(enemy, index);
+                } else if (this.character.energy > 0 &amp;&amp; !this.character.isHit) {
+                    this.character.hit(this.hitbyEnemy);
+                    this.statusBar.setPercentage(this.character.energy);
+                    playSound(ouch);
+                    this.character.isHit = true;
+                    setTimeout(() => {
+                        this.character.isHit = false;
+                    }, 1000);
+                }
+            }
+        });
+    }
+
+    /**
+     * Determines the end state when the end boss is defeated.
+     */
+    checkEndbossDead() {
+        if (this.level.endboss[0]?.dead) {
+            clearAllIntervals();
+            document.getElementById("EndscreenContentWON").classList.remove("none");
+            pauseBackgroundMusic(backGroundMusic);
+        }
+    }
+
+    /**
+     * Determines the end state when the character dies and ends the game.
+     */
+    checkCharacterDead() {
+        if (this.character.energy == 0) {
+            clearAllIntervals();
+            document.getElementById("EndscreenContentLOST").classList.remove("none");
+            pauseBackgroundMusic(backGroundMusic);
+        }
+    }
+
+    /**
+     * Checks for and handles collisions between the character and the end boss.
+     */
+    checkCollisionWithEndboss() {
+        this.level.endboss.forEach((endboss) => {
+            if (this.character.isColliding(endboss) &amp;&amp; !this.character.isHit) {
+                this.character.hit(this.hitbyEndboss);
+                this.statusBar.setPercentage(this.character.energy);
+                playSound(ouch);
+                this.character.isHit = true;
+                setTimeout(() => {
+                    this.character.isHit = false;
+                }, 750);
+            }
+        });
+    }
+
+    /**
+     * Checks for and handles collisions between throwable objects and enemies.
+     */
+    ThrowableObjectAttack() {
+        this.throwableObjects.forEach((throwableObject, index) => {
+            this.level.enemies.forEach((enemy, enemyIndex) => {
+                if (throwableObject.isColliding(enemy)) {
+                    this.killEnemy(enemy, enemyIndex);
+                    this.throwableObjects[index].breakAndSplash();
+                    playSound(bottleSmash);
+                    setTimeout(() => {
+                        this.throwableObjects.splice(index, 1);
+                    }, 250);
+                }
+            });
+
+            if (this.level.endboss) {
+                this.level.endboss.forEach((endboss, endbossIndex) => {
+                    if (throwableObject.isColliding(endboss)) {
+                        this.endboss.hit(this.damage);
+                        this.throwableObjects[index].breakAndSplash();
+                        this.gotHitByBottle();
+                        playSound(bottleSmash);
+                        setTimeout(() => {
+                            this.throwableObjects.splice(index, 1);
+                        }, 250);
+                        this.EndbossStatusBar.setPercentage(this.endboss.energy);
+                        if (this.endboss.energy == 0) {
+                            this.throwableObjects[index].breakAndSplash();
+                            this.endboss.dead = true;
+                            this.endbossDamage(endboss, endbossIndex);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    /**
+     * Monitors and manages the area around the end boss, handling the boss's behavior.
+     */
+    checkEndbossArea() {
+        if (this.level.endboss &amp;&amp; this.level.endboss.length > 0) {
+            if (this.character.x > this.level.endboss[0].x - 400) {
+                this.level.endboss[0].isEntering = true;
+                playSound(angryEndboss);
+            } else if (this.character.x &lt; this.level.endboss[0].x - 400) {
+                this.level.endboss[0].isEntering = false;
+            }
+        }
+    }
+
+    /**
+     * Kills an enemy and removes it from the game world.
+     * @param {*} enemy
+     * @param {*} index
+     */
+    killEnemy(enemy, index) {
+        enemy.dead = true;
+        setTimeout(() => {
+            this.level.enemies.splice(index, 1);
+        }, 150);
+    }
+
+    /**
+     * Handles the end boss's reaction to being hit by a bottle.
+     */
+    gotHitByBottle() {
+        if (this.level.endboss &amp;&amp; this.level.endboss.length > 0 &amp;&amp; this.level.endboss[0]) {
+            let firstEndboss = this.level.endboss[0];
+
+            if (firstEndboss.isEntering) {
+                firstEndboss.isEntering = false;
+            }
+            firstEndboss.hitByBottle = true;
+            setTimeout(() => {
+                if (firstEndboss) {
+                    firstEndboss.hitByBottle = false;
+                }
+            }, 500);
+        }
+    }
+
+    /**
+     * Damages the endboss and removes it from the level after a delay.
+     * @param {Object} endboss - The endboss object to be damaged.
+     * @param {number} index - The index of the endboss in the level.
+     */
+    endbossDamage(endboss, index) {
+        endboss.dead = true;
+        setTimeout(() => {
+            this.level.endboss.splice(index, 1);
+            pauseSound(angryEndboss);
+        }, 300);
+    }
+
+    /**
+     * Renders all visual elements of the game world.
+     */
+    draw() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+        this.ctx.translate(this.camera_x, 0);
+
+        this.addObjectsToMap(this.level.backgroundObjects);
+        this.addObjectsToMap(this.level.clouds);
+        this.ctx.translate(-this.camera_x, 0);
+
+        this.addToMap(this.statusBar);
+        this.addToMap(this.bottleBar);
+        this.addToMap(this.coinbar);
+        this.addToMap(this.EndbossStatusBar);
+
+        this.ctx.translate(this.camera_x, 0);
+
+        this.addObjectsToMap(this.level.enemies);
+        this.addObjectsToMap(this.level.endboss);
+        this.addObjectsToMap(this.throwableObjects);
+        this.addObjectsToMap(this.level.coins);
+        this.addObjectsToMap(this.level.bottle);
+
+        this.addToMap(this.character);
+
+        this.ctx.translate(-this.camera_x, 0);
+
+        let self = this;
+        requestAnimationFrame(function () {
+            self.draw();
+        });
+    }
+
+    /**
+     * Adds multiple objects to the map.
+     * @param {Array} objects - An array of objects to be added to the map.
+     */
+    addObjectsToMap(objects) {
+        objects.forEach((o) => {
+            this.addToMap(o);
+        });
+    }
+
+    /**
+     * Adds a movable object to the map and draws it on the canvas.
+     * If the object is set to move in the opposite direction, it flips the image before drawing.
+     * After drawing, it flips the image back if necessary.
+     *
+     * @param {MovableObject} mo - The movable object to be added to the map.
+     */
+    addToMap(mo) {
+        if (mo.otherDirection) {
+            this.flipImage(mo);
+        }
+        mo.draw(this.ctx);
+        mo.drawFrame(this.ctx);
+
+        if (mo.otherDirection) {
+            this.flipImageBack(mo);
+        }
+    }
+
+    /**
+     * Flips the image horizontally.
+     * @param {Object} mo - The image object to be flipped.
+     */
+    flipImage(mo) {
+        this.ctx.save();
+        this.ctx.translate(mo.width, 0);
+        this.ctx.scale(-1, 1);
+        mo.x = mo.x * -1;
+    }
+
+    /**
+     * Flips the image back horizontally and restores the canvas context.
+     * @param {Object} mo - The object representing the image to be flipped.
+     */
+    flipImageBack(mo) {
+        mo.x = mo.x * -1;
+        this.ctx.restore();
+    }
+
+    /**
+     * Checks for collisions between the character and bottles, allowing the character to collect bottles.
+     */
+    checkCollisionsWithBottles() {
+        this.level.bottle.forEach((bottle, index) => {
+            if (this.character.isColliding(bottle) &amp;&amp; this.bottles &lt; 5) {
+                this.bottles++;
+                this.level.bottle.splice(index, 1);
+                this.bottleBar.setPercentage(this.bottles);
+                playSound(bottleCollectSound);
+            }
+        });
+    }
+
+    /**
+     * Checks for collisions between the character and coins, allowing the character to collect coins.
+     */
+    checkCollisionsWithCoins() {
+        this.level.coins.forEach((coin, index) => {
+            if (this.character.isColliding(coin) &amp;&amp; this.coins &lt; 5) {
+                this.coins++;
+                this.level.coins.splice(index, 1);
+                this.coinbar.setPercentage(this.coins);
+                playSound(coinCollect);
+            }
+        });
+    }
+
+    /**
+     * Checks for collisions between the character and enemies, allowing the character to kill enemies.
+     */
+    checkCollisionsWithEnemies() {
+        if (this.character.y &lt; 110) {
+            this.lastJumpTime = true;
+        }
+
+        if (this.character.y >= 180) {
+            this.lastJumpTime = false;
+        }
+
+        this.level.enemies.forEach((enemy, index) => {
+            if (this.character.isColliding(enemy)) {
+                if (this.character.isAboveGround()) {
+                    if (this.lastJumpTime == true) {
+                        this.killEnemy(enemy, index);
+                        this.lastJumpTime = false;
+                        this.lastJump = true;
+                    }
+                } else {
+                    this.character.hit(this.lastJump);
+                    this.statusBar.setPercentage(this.character.energy);
+                }
+
+                setTimeout(() => {
+                    this.lastJump = false;
+                }, 500);
+            }
+        });
+    }
+
+    /**
+     * Checks for collisions between throwable objects and the ground, allowing the throwable object to break and splash.
+     */
+    checkCollisionsWithGround() {
+        this.throwableObjects.forEach((throwableObject, index) => {
+            if (throwableObject.y > this.splash &amp;&amp; !throwableObject.isBreaking) {
+                this.throwableObjects[index].breakAndSplash();
+                playAudio(bottleHitsGroundSound);
+            }
+            if (throwableObject.animationFinished()) {
+                this.throwableObjects.splice(index, 1);
+            }
+        });
+    }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="Bottlebar.html">Bottlebar</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coinbar.html">Coinbar</a></li><li><a href="Coins.html">Coins</a></li><li><a href="Endboss.html">Endboss</a></li><li><a href="EndbossStatusBar.html">EndbossStatusBar</a></li><li><a href="Keyboard.html">Keyboard</a></li><li><a href="Level.html">Level</a></li><li><a href="MovableObject.html">MovableObject</a></li><li><a href="StatusBar.html">StatusBar</a></li><li><a href="ThrowableObject.html">ThrowableObject</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#angryEndboss">angryEndboss</a></li><li><a href="global.html#backGroundMusic">backGroundMusic</a></li><li><a href="global.html#bottleCollectSound">bottleCollectSound</a></li><li><a href="global.html#bottleSmash">bottleSmash</a></li><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#clearAllIntervals">clearAllIntervals</a></li><li><a href="global.html#coinCollect">coinCollect</a></li><li><a href="global.html#enterFullscreen">enterFullscreen</a></li><li><a href="global.html#exitFullscreen">exitFullscreen</a></li><li><a href="global.html#fullscreen">fullscreen</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initLevel">initLevel</a></li><li><a href="global.html#instructionsOpen">instructionsOpen</a></li><li><a href="global.html#jumpOnChicken">jumpOnChicken</a></li><li><a href="global.html#jumping_sound">jumping_sound</a></li><li><a href="global.html#ouch">ouch</a></li><li><a href="global.html#pauseBackgroundMusic">pauseBackgroundMusic</a></li><li><a href="global.html#pauseSound">pauseSound</a></li><li><a href="global.html#playBackgroundMusic">playBackgroundMusic</a></li><li><a href="global.html#playSound">playSound</a></li><li><a href="global.html#restartGame">restartGame</a></li><li><a href="global.html#setupMobileControls">setupMobileControls</a></li><li><a href="global.html#showStartScreen">showStartScreen</a></li><li><a href="global.html#soundOn">soundOn</a></li><li><a href="global.html#startGame">startGame</a></li><li><a href="global.html#startScreen">startScreen</a></li><li><a href="global.html#walking_sound">walking_sound</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Apr 25 2024 17:15:15 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

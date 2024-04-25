@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: sound.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: sound.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Represents the sound played when the player jumps on a chicken.
+ * @type {Audio}
+ */
+jumpOnChicken = new Audio("audio/jump_on_chicken.mp3");
+
+/**
+ * Represents the sound played when the player is walking.
+ * @type {Audio}
+ */
+walking_sound = new Audio("audio/walking.mp3");
+
+/**
+ * Represents the sound played when the player is jumping.
+ * @type {Audio}
+ */
+jumping_sound = new Audio("audio/jumping.mp3");
+
+/**
+ * Represents the sound played when the player collects a bottle.
+ * @type {Audio}
+ */
+bottleCollectSound = new Audio("audio/collectBottle.mp3");
+
+/**
+ * Represents the sound played when the player collects a coin.
+ * @type {Audio}
+ */
+coinCollect = new Audio("audio/coinCollect.mp3");
+
+/**
+ * Represents the sound played when the player gets hurt.
+ * @type {Audio}
+ */
+ouch = new Audio("audio/ouch.mp3");
+
+/**
+ * Represents the sound played when a bottle is smashed.
+ * @type {Audio}
+ */
+bottleSmash = new Audio("audio/bottleSmash.mp3");
+
+/**
+ * Represents the background music played in the game.
+ * @type {Audio}
+ */
+backGroundMusic = new Audio("audio/backgroundAudio.mp3");
+
+/**
+ * Represents the sound played when the end boss is angry.
+ * @type {Audio}
+ */
+angryEndboss = new Audio("audio/angryEndboss.mp3");
+
+/**
+ * Represents the state of the sound (on/off).
+ * @type {boolean}
+ */
+soundOn = true;
+
+/**
+ * Plays the specified audio if sound is turned on.
+ * @param {Audio} audio - The audio to be played.
+ */
+function playSound(audio) {
+    if (soundOn) {
+        audio.play();
+        audio.volume = 0.2;
+    }
+}
+
+/**
+ * Pauses the specified audio.
+ * @param {Audio} audio - The audio to be paused.
+ */
+function pauseSound(audio) {
+    audio.pause();
+}
+
+/**
+ * Plays the background music if sound is turned on.
+ * @param {Audio} audio - The background music audio.
+ */
+function playBackgroundMusic(audio) {
+    soundOn = true;
+    audio.loop = true;
+    audio.play();
+    audio.volume = 0.1;
+    document.getElementById("soundOff").classList.add("none");
+    document.getElementById("soundOn").classList.remove("none");
+}
+
+/**
+ * Pauses the background music.
+ * @param {Audio} audio - The background music audio.
+ */
+function pauseBackgroundMusic(audio) {
+    soundOn = false;
+    audio.pause();
+    audio.volume = 0;
+    document.getElementById("soundOff").classList.remove("none");
+    document.getElementById("soundOn").classList.add("none");
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="BackgroundObject.html">BackgroundObject</a></li><li><a href="Bottle.html">Bottle</a></li><li><a href="Bottlebar.html">Bottlebar</a></li><li><a href="Character.html">Character</a></li><li><a href="Chicken.html">Chicken</a></li><li><a href="Cloud.html">Cloud</a></li><li><a href="Coinbar.html">Coinbar</a></li><li><a href="Coins.html">Coins</a></li><li><a href="Endboss.html">Endboss</a></li><li><a href="EndbossStatusBar.html">EndbossStatusBar</a></li><li><a href="Keyboard.html">Keyboard</a></li><li><a href="Level.html">Level</a></li><li><a href="MovableObject.html">MovableObject</a></li><li><a href="StatusBar.html">StatusBar</a></li><li><a href="ThrowableObject.html">ThrowableObject</a></li><li><a href="World.html">World</a></li></ul><h3>Global</h3><ul><li><a href="global.html#angryEndboss">angryEndboss</a></li><li><a href="global.html#backGroundMusic">backGroundMusic</a></li><li><a href="global.html#bottleCollectSound">bottleCollectSound</a></li><li><a href="global.html#bottleSmash">bottleSmash</a></li><li><a href="global.html#canvas">canvas</a></li><li><a href="global.html#clearAllIntervals">clearAllIntervals</a></li><li><a href="global.html#coinCollect">coinCollect</a></li><li><a href="global.html#enterFullscreen">enterFullscreen</a></li><li><a href="global.html#exitFullscreen">exitFullscreen</a></li><li><a href="global.html#fullscreen">fullscreen</a></li><li><a href="global.html#init">init</a></li><li><a href="global.html#initLevel">initLevel</a></li><li><a href="global.html#instructionsOpen">instructionsOpen</a></li><li><a href="global.html#jumpOnChicken">jumpOnChicken</a></li><li><a href="global.html#jumping_sound">jumping_sound</a></li><li><a href="global.html#ouch">ouch</a></li><li><a href="global.html#pauseBackgroundMusic">pauseBackgroundMusic</a></li><li><a href="global.html#pauseSound">pauseSound</a></li><li><a href="global.html#playBackgroundMusic">playBackgroundMusic</a></li><li><a href="global.html#playSound">playSound</a></li><li><a href="global.html#restartGame">restartGame</a></li><li><a href="global.html#setupMobileControls">setupMobileControls</a></li><li><a href="global.html#showStartScreen">showStartScreen</a></li><li><a href="global.html#soundOn">soundOn</a></li><li><a href="global.html#startGame">startGame</a></li><li><a href="global.html#startScreen">startScreen</a></li><li><a href="global.html#walking_sound">walking_sound</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.2</a> on Thu Apr 25 2024 17:15:15 GMT+0200 (Central European Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
