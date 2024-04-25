@@ -65,7 +65,10 @@ class Character extends MovableObject {
 
     world;
 
-    // The constructor method is a special method for creating and initializing an object created within a class.
+    /**
+     * Represents a character in the game.
+     * @constructor
+     */
     constructor() {
         super().loadImage("img/2_character_pepe/2_walk/W-21.png");
         this.loadImages(this.IMAGES_Walking);
@@ -78,7 +81,10 @@ class Character extends MovableObject {
         this.animate();
     }
 
-    // The animate method is responsible for the character's behavior and animations.
+    /**
+     * Animates the character's movements and plays corresponding animations based on keyboard inputs and character state.
+     * @returns {void}
+     */
     animate() {
         setInterval(() => {
             pauseSound(walking_sound);

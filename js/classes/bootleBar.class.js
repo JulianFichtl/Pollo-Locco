@@ -8,7 +8,10 @@ class Bottlebar extends DrawObjects {
         "img/7_statusbars/1_statusbar/3_statusbar_bottle/orange/100.png",
     ];
 
-    // Bottlebar constructor
+    /**
+     * Represents a BottleBar object.
+     * @constructor
+     */
     constructor() {
         super();
         this.loadImages(this.IMAGES_Bottles);
@@ -19,14 +22,20 @@ class Bottlebar extends DrawObjects {
         this.setPercentage(0);
     }
 
-    // Sets the percentage of bottles
+    /**
+     * Sets the percentage of bottles and updates the image accordingly.
+     * @param {number} bottles - The number of bottles.
+     */
     setPercentage(bottles) {
         this.bottles = bottles;
         let imagePath = this.IMAGES_Bottles[this.resolveImageIndex()];
         this.img = this.imageCache[imagePath];
     }
 
-    // Resolves the image index
+    /**
+     * Resolves the image index based on the number of bottles.
+     * @returns {number} The image index.
+     */
     resolveImageIndex() {
         if (this.bottles === 0) {
             return 0;

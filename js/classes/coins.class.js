@@ -1,7 +1,10 @@
 class Coins extends MovableObject {
     IMAGES_COINS = ["img/8_coin/coin_1.png", "img/8_coin/coin_2.png"];
 
-    // Coins constructor
+    /**
+     * Represents a Coin object.
+     * @constructor
+     */
     constructor() {
         super();
         this.x = 200 + Math.random() * 3000;
@@ -13,7 +16,9 @@ class Coins extends MovableObject {
         this.animate();
     }
 
-    // Handles coin logic
+    /**
+     * Animates the coins by cycling through different images at a fixed interval.
+     */
     animate() {
         setInterval(() => {
             let i = this.currentImage % this.IMAGES_COINS.length;

@@ -1,5 +1,3 @@
-// Class attributes initialization with some objects such as Character, Endboss, and various status bars, along with initial game settings like damage values.
-
 class World {
     character = new Character();
     endboss = new Endboss();
@@ -21,8 +19,12 @@ class World {
     hitbyEndboss = 50;
     splash = 350;
 
-    // Constructor: Initializes the game world, sets up the drawing context, keyboard controls, and starts the main game loops.
-
+    /**
+     * Represents a World object.
+     * @constructor
+     * @param {HTMLCanvasElement} canvas - The canvas element to draw on.
+     * @param {Keyboard} keyboard - The keyboard object for handling user input.
+     */
     constructor(canvas, keyboard) {
         this.ctx = canvas.getContext("2d");
         this.canvas = canvas;
@@ -32,14 +34,16 @@ class World {
         this.run();
     }
 
-    // Associates the world context with the character, allowing interaction between the character and the game world.
-
+    /**
+     * Links the world context to the character, allowing interactions between the character and the world.
+     */
     setWorld() {
         this.character.world = this;
     }
 
-    // Starts the game loops, with one running every 100 milliseconds for general game checks and another every 20 milliseconds for specific environment checks.
-
+    /**
+     * Starts the main game loops for checking collisions and environment interactions.
+     */
     run() {
         setInterval(() => {
             this.checkCollisions();
@@ -57,7 +61,9 @@ class World {
         }, 20);
     }
 
-    // Throws a bottle object when the character presses the "D" key, reducing the number of bottles available to the character.
+    /**
+     * Handles the action of throwing a bottle by the character.
+     */
     checkThrowobjects() {
         if (this.keyboard.D && this.bottles > 0 && !this.isThrowing && !this.throwTimeout) {
             this.isThrowing = true;
@@ -73,7 +79,9 @@ class World {
         }
     }
 
-    // Checks if the character is colliding with an enemy, and if so, either jumps on the enemy or takes damage.
+    /**
+     * Checks for and handles collisions between the character and enemies.
+     */
     checkCollisions() {
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) {
@@ -88,13 +96,15 @@ class World {
                     this.character.isHit = true;
                     setTimeout(() => {
                         this.character.isHit = false;
-                    }, 2000);
+                    }, 1000);
                 }
             }
         });
     }
 
-    // Checks if the character is colliding with the end boss, and if so, either takes damage or kills the end boss.
+    /**
+     * Determines the end state when the end boss is defeated.
+     */
     checkEndbossDead() {
         if (this.level.endboss[0]?.dead) {
             clearAllIntervals();
@@ -103,7 +113,9 @@ class World {
         }
     }
 
-    // Checks if the character is dead, and if so, displays the game over screen.
+    /**
+     * Determines the end state when the character dies and ends the game.
+     */
     checkCharacterDead() {
         if (this.character.energy == 0) {
             clearAllIntervals();
@@ -112,7 +124,9 @@ class World {
         }
     }
 
-    // Checks if the character is colliding with the end boss, and if so, either takes damage or kills the end boss.
+    /**
+     * Checks for and handles collisions between the character and the end boss.
+     */
     checkCollisionWithEndboss() {
         this.level.endboss.forEach((endboss) => {
             if (this.character.isColliding(endboss) && !this.character.isHit) {
@@ -127,7 +141,9 @@ class World {
         });
     }
 
-    // Checks if the character is colliding with a throwable object, and if so, either kills the enemy or damages the end boss.
+    /**
+     * Checks for and handles collisions between throwable objects and enemies.
+     */
     ThrowableObjectAttack() {
         this.throwableObjects.forEach((throwableObject, index) => {
             this.level.enemies.forEach((enemy, enemyIndex) => {
@@ -163,7 +179,9 @@ class World {
         });
     }
 
-    // Checks if the character is in the end boss area, and if so, sets the end boss to enter the area.
+    /**
+     * Monitors and manages the area around the end boss, handling the boss's behavior.
+     */
     checkEndbossArea() {
         if (this.level.endboss && this.level.endboss.length > 0) {
             if (this.character.x > this.level.endboss[0].x - 400) {
@@ -175,7 +193,11 @@ class World {
         }
     }
 
-    // Kills an enemy and removes it from the game world.
+    /**
+     * Kills an enemy and removes it from the game world.
+     * @param {*} enemy
+     * @param {*} index
+     */
     killEnemy(enemy, index) {
         enemy.dead = true;
         setTimeout(() => {
@@ -183,7 +205,9 @@ class World {
         }, 150);
     }
 
-    // Handles the end boss's reaction to being hit by a bottle, updating their behavior state.
+    /**
+     * Handles the end boss's reaction to being hit by a bottle.
+     */
     gotHitByBottle() {
         if (this.level.endboss && this.level.endboss.length > 0 && this.level.endboss[0]) {
             let firstEndboss = this.level.endboss[0];
@@ -200,7 +224,11 @@ class World {
         }
     }
 
-    // Kills the end boss and removes it from the game world - Stop Sound after killing
+    /**
+     * Damages the endboss and removes it from the level after a delay.
+     * @param {Object} endboss - The endboss object to be damaged.
+     * @param {number} index - The index of the endboss in the level.
+     */
     endbossDamage(endboss, index) {
         endboss.dead = true;
         setTimeout(() => {
@@ -209,7 +237,9 @@ class World {
         }, 300);
     }
 
-    // Draws the game world, including the character, enemies, throwable objects, and various status bars.
+    /**
+     * Renders all visual elements of the game world.
+     */
     draw() {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -242,14 +272,23 @@ class World {
         });
     }
 
-    // Helper function to draw a list of objects to the canvas, like backgrounds or collectibles.
+    /**
+     * Adds multiple objects to the map.
+     * @param {Array} objects - An array of objects to be added to the map.
+     */
     addObjectsToMap(objects) {
         objects.forEach((o) => {
             this.addToMap(o);
         });
     }
 
-    // Draws a single movable object on the canvas, flipping the image if the object's direction is reversed.
+    /**
+     * Adds a movable object to the map and draws it on the canvas.
+     * If the object is set to move in the opposite direction, it flips the image before drawing.
+     * After drawing, it flips the image back if necessary.
+     *
+     * @param {MovableObject} mo - The movable object to be added to the map.
+     */
     addToMap(mo) {
         if (mo.otherDirection) {
             this.flipImage(mo);
@@ -262,7 +301,10 @@ class World {
         }
     }
 
-    // Saves the current state of the canvas and flips an image for right-to-left drawing.
+    /**
+     * Flips the image horizontally.
+     * @param {Object} mo - The image object to be flipped.
+     */
     flipImage(mo) {
         this.ctx.save();
         this.ctx.translate(mo.width, 0);
@@ -270,13 +312,18 @@ class World {
         mo.x = mo.x * -1;
     }
 
-    // Restores the canvas to its original state after an image has been flipped.
+    /**
+     * Flips the image back horizontally and restores the canvas context.
+     * @param {Object} mo - The object representing the image to be flipped.
+     */
     flipImageBack(mo) {
         mo.x = mo.x * -1;
         this.ctx.restore();
     }
 
-    // Checks for collisions between the character and bottles, allowing the character to collect bottles.
+    /**
+     * Checks for collisions between the character and bottles, allowing the character to collect bottles.
+     */
     checkCollisionsWithBottles() {
         this.level.bottle.forEach((bottle, index) => {
             if (this.character.isColliding(bottle) && this.bottles < 5) {
@@ -288,7 +335,9 @@ class World {
         });
     }
 
-    // Checks for collisions between the character and coins, allowing the character to collect coins.
+    /**
+     * Checks for collisions between the character and coins, allowing the character to collect coins.
+     */
     checkCollisionsWithCoins() {
         this.level.coins.forEach((coin, index) => {
             if (this.character.isColliding(coin) && this.coins < 5) {
@@ -300,7 +349,9 @@ class World {
         });
     }
 
-    // Checks for collisions between the character and enemies, allowing the character to jump on enemies or take damage.
+    /**
+     * Checks for collisions between the character and enemies, allowing the character to kill enemies.
+     */
     checkCollisionsWithEnemies() {
         if (this.character.y < 110) {
             this.lastJumpTime = true;
@@ -330,7 +381,9 @@ class World {
         });
     }
 
-    // Checks for collisions between throwable objects and enemies, allowing the character to kill enemies with bottles.
+    /**
+     * Checks for collisions between throwable objects and the ground, allowing the throwable object to break and splash.
+     */
     checkCollisionsWithGround() {
         this.throwableObjects.forEach((throwableObject, index) => {
             if (throwableObject.y > this.splash && !throwableObject.isBreaking) {

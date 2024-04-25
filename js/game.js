@@ -1,13 +1,20 @@
-// Description: This file contains the game logic.
+/**
+ * The game.js file contains the game logic.
+ */
 let canvas;
 let world;
 let keyboard = new Keyboard();
 
-// The startGame function initializes the game.
+/**
+ * The startGame function initializes the game.
+ */
 function startGame() {
     init();
 }
-// The init function initializes the level and the game world.
+
+/**
+ * The init function initializes the game.
+ */
 function init() {
     initLevel();
     canvas = document.getElementById("canvas");
@@ -17,29 +24,50 @@ function init() {
     setupMobileControls();
 }
 
+/**
+ * Set back of al intervals.
+ */
 function clearAllIntervals() {
     for (let i = 1; i < 9999; i++) window.clearInterval(i);
 }
 
-// The closeStartScreen function hides the start screen.
+/**
+ * The startScreen function initializes the start screen.
+ */
 function startScreen() {
     document.getElementById("startGame").style.display = "none";
     document.getElementById("fullscreenButton").style.display = "flex";
     document.getElementById("hud").style.visibility = "visible";
 }
 
+/**
+ * The showStartScreen function shows the start screen.
+ * @param {string} startScreen The start screen.
+ * @param {string} startScreenBackground The start screen background.
+ * @param {string} startGame The start game.
+ */
+
 function showStartScreen() {
     document.getElementById("startScreen").style.display = "flex";
     document.getElementById("startScreenBackground").style.display = "flex";
     document.getElementById("startGame").style.display = "flex";
 }
-// The restartGame function reloads the game.
+
+/**
+ * The initLevel function initializes the level.
+ * @param {string} level The level.
+ * @param {string} levelBackground The level background.
+ * @param {string} hud The hud.
+ */
 function restartGame(LostorWon) {
     clearAllIntervals();
     document.getElementById(LostorWon).classList.add("none");
     startGame();
 }
-// The initLevel function initializes the level.
+
+/**
+ * The initLevel function initializes the level.
+ */
 document.addEventListener("keydown", (e) => {
     if (e.code == "ArrowRight") {
         keyboard.RIGHT = true;
@@ -60,7 +88,10 @@ document.addEventListener("keydown", (e) => {
         keyboard.D = true;
     }
 });
-// The initLevel function initializes the level.
+
+/**
+ * Add Keyboard function.
+ */
 document.addEventListener("keyup", (e) => {
     if (e.code == "ArrowRight") {
         keyboard.RIGHT = false;
@@ -82,6 +113,9 @@ document.addEventListener("keyup", (e) => {
     }
 });
 
+/**
+ * The setupMobileControls function initializes the mobile controls.
+ */
 function setupMobileControls() {
     const btnLeft = document.getElementById("btnLeft");
     const btnRight = document.getElementById("btnRight");

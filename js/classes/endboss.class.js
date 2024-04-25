@@ -1,3 +1,6 @@
+/**
+ * Represents the Endboss class, which extends the MovableObject class.
+ */
 class Endboss extends MovableObject {
     height = 400;
     width = 400;
@@ -32,7 +35,9 @@ class Endboss extends MovableObject {
     IMAGES_Hurt = ["img/4_enemie_boss_chicken/4_hurt/G21.png", "img/4_enemie_boss_chicken/4_hurt/G22.png", "img/4_enemie_boss_chicken/4_hurt/G23.png"];
     IMAGES_Dead = ["img/4_enemie_boss_chicken/5_dead/G24.png", "img/4_enemie_boss_chicken/5_dead/G25.png", "img/4_enemie_boss_chicken/5_dead/G26.png"];
 
-    // Endboss constructor
+    /**
+     * Constructs a new instance of the Endboss class.
+     */
     constructor() {
         super().loadImage(this.IMAGES_Walking[0]);
         this.loadImages(this.IMAGES_Attack);
@@ -44,7 +49,9 @@ class Endboss extends MovableObject {
         this.animate();
     }
 
-    // Handles endboss logic
+    /**
+     * Handles the logic for the endboss animation.
+     */
     animate() {
         setInterval(() => {
             if (this.dead) {

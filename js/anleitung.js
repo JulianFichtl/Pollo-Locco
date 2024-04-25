@@ -1,4 +1,6 @@
-//Open and close the instructions on page
+/**
+ * Instructions Overlay.
+ */
 function instructionsOpen() {
     document.getElementById("anleitungTextWrapper").classList.remove("d-none");
 }

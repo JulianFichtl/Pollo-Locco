@@ -4,7 +4,10 @@ class Bottle extends MovableObject {
     y = 320;
     brokenBottle = false;
 
-    // Bottle constructor
+    /**
+     * Represents a Bottle object.
+     * @constructor
+     */
     constructor() {
         super();
         this.x = 200 + Math.random() * 2500;
@@ -13,7 +16,9 @@ class Bottle extends MovableObject {
         this.animate();
     }
 
-    // Handles bottle logic
+    /**
+     * Animates the bottle by playing the animation at a regular interval.
+     */
     animate() {
         setInterval(() => {
             this.playAnimation(this.IMAGES_Bottles);

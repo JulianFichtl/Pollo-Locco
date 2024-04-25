@@ -1,10 +1,14 @@
-// Enter Fullscreen mode
+/**
+ * Fullscreen mode
+ */
 function fullscreen() {
     let fullscreen = document.getElementById("canvas");
     enterFullscreen(fullscreen);
 }
 
-// Fullscreen mode
+/**
+ * Enter Fullscreen mode
+ */
 function enterFullscreen(element) {
     if (element.requestFullscreen) {
         element.requestFullscreen();
@@ -15,7 +19,9 @@ function enterFullscreen(element) {
     }
 }
 
-// Exit Fullscreen mode
+/**
+ * Exit Fullscreen mode
+ */
 function exitFullscreen(document) {
     if (document.exitFullscreen) {
         document.exitFullscreen();

@@ -24,7 +24,13 @@ class ThrowableObject extends MovableObject {
         "img/6_salsa_bottle/bottle_rotation/bottle_splash/6_bottle_splash.png",
     ];
 
-    // Bottle constructor
+    /**
+     * Represents a throwable object.
+     * @constructor
+     * @param {number} x - The x-coordinate of the object.
+     * @param {number} y - The y-coordinate of the object.
+     * @param {Function} getDirection - A function that returns the direction of the object.
+     */
     constructor(x, y, getDirection) {
         super().loadImage("img/6_salsa_bottle/salsa_bottle.png");
         this.loadImages(this.IMAGES_ROTATE);
@@ -36,7 +42,9 @@ class ThrowableObject extends MovableObject {
         this.animateBottle();
     }
 
-    // Handles bottle logic
+    /**
+     * Throws the object with a specified speed and applies gravity.
+     */
     throw() {
         this.speedY = 15;
         this.applyGravitiy();
@@ -49,7 +57,9 @@ class ThrowableObject extends MovableObject {
         }, 50);
     }
 
-    // Handles bottle animation
+    /**
+     * Animates the bottle by continuously playing the rotation animation until it breaks.
+     */
     animateBottle() {
         let animationInterval = setInterval(() => {
             if (!this.isBreaking) {
@@ -60,7 +70,9 @@ class ThrowableObject extends MovableObject {
         }, 50);
     }
 
-    // Handles bottle breaking
+    /**
+     * Makes the object break and splash.
+     */
     breakAndSplash() {
         this.isBreaking = true;
         this.playAnimation(this.IMAGES_BOTTLE_SPLASH);
@@ -69,7 +81,10 @@ class ThrowableObject extends MovableObject {
         this.deletable = true;
     }
 
-    // Handles bottle splash animation
+    /**
+     * Checks if the animation of the throwable object has finished.
+     * @returns {boolean} True if the animation has finished, false otherwise.
+     */
     animationFinished() {
         if (this.IMAGES_SPLASH && this.IMAGES_SPLASH.length > 0) {
             return this.currentImageIndex === this.IMAGES_SPLASH.length - 1;

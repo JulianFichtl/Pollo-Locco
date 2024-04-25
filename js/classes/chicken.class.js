@@ -1,3 +1,7 @@
+/**
+ * Represents a Chicken object.
+ * @extends MovableObject
+ */
 class Chicken extends MovableObject {
     y = 320;
     energy = 100;
@@ -5,7 +9,10 @@ class Chicken extends MovableObject {
     IMAGES_Dead = ["img/3_enemies_chicken/chicken_normal/2_dead/dead.png"];
     dead = false;
 
-    // Chicken constructor
+    /**
+     * Represents a Chicken object.
+     * @constructor
+     */
     constructor() {
         super().loadImage("img/3_enemies_chicken/chicken_normal/1_walk/1_w.png");
         this.loadImages(this.IMAGES_Walking);
@@ -15,7 +22,9 @@ class Chicken extends MovableObject {
         this.animate();
     }
 
-    // Handles chicken logic
+    /**
+     * Animates the chicken by continuously moving it left and playing different animations based on its state.
+     */
     animate() {
         setInterval(() => {
             if (!this.dead) {

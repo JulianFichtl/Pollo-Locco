@@ -269,6 +269,10 @@ button:hover {
     display: none;
 }
 
+.turnPhoneText {
+    text-align: center;
+}
+
 @media only screen and (max-width: 720px) {
     #canvas {
         width: 100vw;
@@ -297,11 +301,13 @@ button:hover {
         align-items: center;
         position: absolute;
         z-index: 5000;
-        background-color: black;
+        background-color: rgb(198, 43, 0);
         top: 0;
         left: 0;
         right: 0;
         bottom: 0;
+        flex-direction: column;
+        gap: 15px;
     }
 
     @media only screen and (max-height: 480px) {
@@ -336,11 +342,13 @@ button:hover {
             align-items: center;
             position: absolute;
             z-index: 5000;
-            background-color: black;
+            background-color: rgb(198, 43, 0);
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
+            flex-direction: column;
+            gap: 15px;
         }
     }
 }

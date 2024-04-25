@@ -7,18 +7,28 @@ class DrawObjects {
     height = 100;
     width = 100;
 
-    // Loads an image
+    /**
+     * Loads an image from the specified path.
+     * @param {string} path - The path to the image file.
+     */
     loadImage(path) {
         this.img = new Image();
         this.img.src = path;
     }
 
-    // Draws an image
+    /**
+     * Draws the object on the canvas.
+     *
+     * @param {CanvasRenderingContext2D} ctx - The rendering context of the canvas.
+     */
     draw(ctx) {
         ctx.drawImage(this.img, this.x, this.y, this.width, this.height);
     }
 
-    // Loads multiple images
+    /**
+     * Loads images into the image cache.
+     * @param {string[]} arr - An array of image paths to be loaded.
+     */
     loadImages(arr) {
         arr.forEach((path) => {
             let img = new Image();
@@ -27,7 +37,11 @@ class DrawObjects {
         });
     }
 
-    // Draws a frame
+    /**
+     * Draws a frame on the canvas.
+     *
+     * @param {CanvasRenderingContext2D} ctx - The rendering context of the canvas.
+     */
     drawFrame(ctx) {
         ctx.beginPath();
         ctx.lineWidth = "";
