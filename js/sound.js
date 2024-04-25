@@ -38,6 +38,7 @@ function playBackgroundMusic(audio) {
 function pauseBackgroundMusic(audio) {
     soundOn = false;
     audio.pause();
+    audio.volume = 0;
     document.getElementById("soundOff").classList.remove("none");
     document.getElementById("soundOn").classList.add("none");
 }

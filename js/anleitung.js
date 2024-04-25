@@ -1,7 +1,7 @@
 //Open and close the instructions on page
-function anleitungOpen() {
+function instructionsOpen() {
     document.getElementById("anleitungTextWrapper").classList.remove("d-none");
 }
-function anleitungClose() {
+function instructionsClose() {
     document.getElementById("anleitungTextWrapper").classList.add("d-none");
 }

@@ -38,15 +38,54 @@
     </head>
     <body>
         <div id="fullscreen" class="CanvasWrapper">
-            <h1 class="headline">El pollo loco</h1>
             <canvas id="canvas" width="720" height="480"></canvas>
-            <img id="startScreenBackground" class="startScreenBackground" src="img/5_background/background_Image_Game.jpg" alt="">
-            <img id="startScreen" class="startScreen" src="img/9_intro_outro_screens/start/startscreen_1.png" alt="">
             <button id="startGame" onclick="startGame()">Start Game</button>
+            <div class="hud" id="hud">
+                <div class="panelWrapper">
+                    <button id="btnLeft"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_50_376" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+<rect width="24" height="24" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_50_376)">
+<path d="M16 22L6 12L16 2L17.775 3.775L9.55 12L17.775 20.225L16 22Z" fill="white"/>
+</g>
+</svg>
+</button>
+                    <button id="btnRight"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_50_378" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+<rect x="24" y="24" width="24" height="24" transform="rotate(180 24 24)" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_50_378)">
+<path d="M8 2L18 12L8 22L6.225 20.225L14.45 12L6.225 3.775L8 2Z" fill="white"/>
+</g>
+</svg>
+</button>
+                </div>
+                <div class="panelWrapper">
+                    <button id="btnJump"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_50_386" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+<rect width="24" height="24" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_50_386)">
+<path d="M11 5.825L6.4 10.4L5 9L12 2L19 9L17.6 10.425L13 5.825V13H11V5.825ZM11 18V15H13V18H11ZM11 22V20H13V22H11Z" fill="white"/>
+</g>
+</svg>
+</button>
+                    <button id="btnThrow"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="mask0_50_392" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24">
+<rect width="24" height="24" fill="#D9D9D9"/>
+</mask>
+<g mask="url(#mask0_50_392)">
+<path d="M9 19V17H11C10.75 14.7 9.76667 12.7917 8.05 11.275C6.33333 9.75833 4.31667 9 2 9V7C4.15 7 6.125 7.56667 7.925 8.7C9.725 9.83333 11.0833 11.3667 12 13.3C12.6333 11.95 13.4667 10.7542 14.5 9.7125C15.5333 8.67083 16.6917 7.76667 17.975 7H14V5H21V12H19V8.7C17.45 9.65 16.1167 10.825 15 12.225C13.8833 13.625 13.2167 15.2167 13 17H15V19H9Z" fill="white"/>
+</g>
+</svg>
+</button>
+                </div>
+            </div>
             <div class="ButtonWrapper">
-                <button onclick="playBackgroundMusic(backGroundMusic)" id="soundOff">SOUND OFF</button>
-                <button onclick="pauseBackgroundMusic(backGroundMusic)" id="soundOn" class="none">SOUND ON</button>
-                <button onclick="anleitungOpen()" id="anleitung">Hilfe</button>
+                <button onclick="playBackgroundMusic(backGroundMusic)" id="soundOff">SOUND ON</button>
+                <button onclick="pauseBackgroundMusic(backGroundMusic)" id="soundOn" class="none">SOUND OFF</button>
+                <button onclick="instructionsOpen()" id="anleitung">Hilfe</button>
                 <button id="fullscreenButton" onclick="fullscreen()">Fullscreen</button>
             </div>
             <div id="anleitungTextWrapper" class="anleitungTextWrapper d-none">
@@ -80,7 +119,7 @@
                     Bewege Pablo mit den Pfeiltasten nach links und rechts. Springen kannst du mit der Leertaste. Sammle die Münzen ein und werfe die Flaschen mit D. Finde den Endgegner und besiege Ihn. Viel Spaß!
                 </p>
                 <div class="buttonOverlayWrapper">
-                <button onclick="anleitungClose()" id="closeAnleitung">Schließen</button>
+                <button onclick="instructionsOpen()" id="closeAnleitung">Schließen</button>
                 </div>
             </div>
             <div id="EndscreenContentWON" class="Endscreen none">
@@ -94,6 +133,9 @@
             </div>
             <div class="mobileDeclindedScreen">
                 <p class="noMobileScreen">To ensure 100% game experience, <br> please use your desktop device.</p>
+            </div>
+            <div class="onlyLandscape">
+                <p>Turn your Device <br> Landscape to get <br>full experience</p>
             </div>
     </body>
 </html>

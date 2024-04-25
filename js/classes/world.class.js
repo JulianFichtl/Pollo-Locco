@@ -97,6 +97,7 @@ class World {
     // Checks if the character is colliding with the end boss, and if so, either takes damage or kills the end boss.
     checkEndbossDead() {
         if (this.level.endboss[0]?.dead) {
+            clearAllIntervals();
             document.getElementById("EndscreenContentWON").classList.remove("none");
             pauseBackgroundMusic(backGroundMusic);
         }
@@ -105,6 +106,7 @@ class World {
     // Checks if the character is dead, and if so, displays the game over screen.
     checkCharacterDead() {
         if (this.character.energy == 0) {
+            clearAllIntervals();
             document.getElementById("EndscreenContentLOST").classList.remove("none");
             pauseBackgroundMusic(backGroundMusic);
         }

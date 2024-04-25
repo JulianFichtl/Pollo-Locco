@@ -12,8 +12,9 @@ function init() {
     initLevel();
     canvas = document.getElementById("canvas");
     world = new World(canvas, keyboard);
-    this.closeStartScreen();
+    startScreen();
     playBackgroundMusic(backGroundMusic);
+    setupMobileControls();
 }
 
 function clearAllIntervals() {
@@ -21,10 +22,10 @@ function clearAllIntervals() {
 }
 
 // The closeStartScreen function hides the start screen.
-function closeStartScreen() {
-    document.getElementById("startScreen").style.display = "none";
-    document.getElementById("startScreenBackground").style.display = "none";
+function startScreen() {
     document.getElementById("startGame").style.display = "none";
+    document.getElementById("fullscreenButton").style.display = "flex";
+    document.getElementById("hud").style.visibility = "visible";
 }
 
 function showStartScreen() {
@@ -80,3 +81,42 @@ document.addEventListener("keyup", (e) => {
         keyboard.D = false;
     }
 });
+
+function setupMobileControls() {
+    const btnLeft = document.getElementById("btnLeft");
+    const btnRight = document.getElementById("btnRight");
+    const btnJump = document.getElementById("btnJump");
+    const btnThrow = document.getElementById("btnThrow");
+
+    btnLeft.addEventListener("touchstart", () => {
+        keyboard.LEFT = true;
+    });
+
+    btnLeft.addEventListener("touchend", () => {
+        keyboard.LEFT = false;
+    });
+
+    btnRight.addEventListener("touchstart", () => {
+        keyboard.RIGHT = true;
+    });
+
+    btnRight.addEventListener("touchend", () => {
+        keyboard.RIGHT = false;
+    });
+
+    btnJump.addEventListener("touchstart", () => {
+        keyboard.SPACE = true;
+    });
+
+    btnJump.addEventListener("touchend", () => {
+        keyboard.SPACE = false;
+    });
+
+    btnThrow.addEventListener("touchstart", () => {
+        keyboard.D = true;
+    });
+
+    btnThrow.addEventListener("touchend", () => {
+        keyboard.D = false;
+    });
+}
