@@ -223,27 +223,6 @@ button:hover {
     canvas {
         width: calc(100% - 24px);
     }
-
-    .mobileDeclindedScreen {
-        background-color: #db2d0a;
-        position: absolute;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-        z-index: 5000;
-    }
-
-    .noMobileScreen {
-        text-align: center;
-        font-size: 16px;
-        color: white;
-        height: 30px;
-        width: 100%;
-        display: flex;
-        justify-content: center;
-    }
 }
 
 @media only screen and (max-height: 480px) {

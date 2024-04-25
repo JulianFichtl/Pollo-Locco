@@ -15,15 +15,28 @@ function init() {
     this.closeStartScreen();
     playBackgroundMusic(backGroundMusic);
 }
+
+function clearAllIntervals() {
+    for (let i = 1; i < 9999; i++) window.clearInterval(i);
+}
+
 // The closeStartScreen function hides the start screen.
 function closeStartScreen() {
     document.getElementById("startScreen").style.display = "none";
     document.getElementById("startScreenBackground").style.display = "none";
     document.getElementById("startGame").style.display = "none";
 }
+
+function showStartScreen() {
+    document.getElementById("startScreen").style.display = "flex";
+    document.getElementById("startScreenBackground").style.display = "flex";
+    document.getElementById("startGame").style.display = "flex";
+}
 // The restartGame function reloads the game.
-function restartGame() {
-    window.location.reload();
+function restartGame(LostorWon) {
+    clearAllIntervals();
+    document.getElementById(LostorWon).classList.add("none");
+    startGame();
 }
 // The initLevel function initializes the level.
 document.addEventListener("keydown", (e) => {

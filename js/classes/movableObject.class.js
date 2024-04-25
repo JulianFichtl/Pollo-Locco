@@ -1,7 +1,7 @@
 class MovableObject extends DrawObjects {
     speed = 0.15;
     otherDirection = false;
-    speedY = 0;
+    speedY = 1;
     acceleration = 2;
     energy = 100;
     lastHit = 0;
@@ -29,7 +29,7 @@ class MovableObject extends DrawObjects {
 
     // Checks if object is colliding with another object
     isColliding(mo) {
-        const thisRight = this.x + this.width;
+        const thisRight = this.x + this.width - this.width / 2;
         const thisBottom = this.y + this.height;
         const moRight = mo.x + mo.width;
         const moBottom = mo.y + mo.height;

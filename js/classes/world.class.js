@@ -17,7 +17,8 @@ class World {
     bottles = [];
     coins = [];
     damage = 5;
-    hitbyEnemy = 10;
+    hitbyEnemy = 20;
+    hitbyEndboss = 50;
     splash = 350;
 
     // Constructor: Initializes the game world, sets up the drawing context, keyboard controls, and starts the main game loops.
@@ -56,17 +57,19 @@ class World {
         }, 20);
     }
 
-    // Checks if the character is colliding with an enemy, and if so, either jumps on the enemy or takes damage.
+    // Throws a bottle object when the character presses the "D" key, reducing the number of bottles available to the character.
     checkThrowobjects() {
-        if (this.keyboard.D && this.bottles > 0 && !this.isThrowing) {
+        if (this.keyboard.D && this.bottles > 0 && !this.isThrowing && !this.throwTimeout) {
             this.isThrowing = true;
             this.bottles--;
             this.bottleBar.setPercentage(this.bottles);
             console.log(this.bottles);
             let bottle = new ThrowableObject(this.character.x + 100, this.character.y + 100, this.character.otherDirection);
             this.throwableObjects.push(bottle);
-        } else if (!this.keyboard.D) {
-            this.isThrowing = false;
+            this.throwTimeout = setTimeout(() => {
+                this.isThrowing = false;
+                this.throwTimeout = null;
+            }, 600);
         }
     }
 
@@ -74,7 +77,7 @@ class World {
     checkCollisions() {
         this.level.enemies.forEach((enemy, index) => {
             if (this.character.isColliding(enemy)) {
-                if (this.character.isAboveGround()) {
+                if (this.character.isAboveGround() && this.character.y < enemy.y + 75) {
                     this.character.jump();
                     playSound(jumpOnChicken);
                     this.killEnemy(enemy, index);
@@ -95,6 +98,7 @@ class World {
     checkEndbossDead() {
         if (this.level.endboss[0]?.dead) {
             document.getElementById("EndscreenContentWON").classList.remove("none");
+            pauseBackgroundMusic(backGroundMusic);
         }
     }
 
@@ -102,6 +106,7 @@ class World {
     checkCharacterDead() {
         if (this.character.energy == 0) {
             document.getElementById("EndscreenContentLOST").classList.remove("none");
+            pauseBackgroundMusic(backGroundMusic);
         }
     }
 
@@ -109,13 +114,13 @@ class World {
     checkCollisionWithEndboss() {
         this.level.endboss.forEach((endboss) => {
             if (this.character.isColliding(endboss) && !this.character.isHit) {
-                this.character.hit(this.hitbyEnemy);
+                this.character.hit(this.hitbyEndboss);
                 this.statusBar.setPercentage(this.character.energy);
                 playSound(ouch);
                 this.character.isHit = true;
                 setTimeout(() => {
                     this.character.isHit = false;
-                }, 2000);
+                }, 750);
             }
         });
     }
@@ -173,7 +178,7 @@ class World {
         enemy.dead = true;
         setTimeout(() => {
             this.level.enemies.splice(index, 1);
-        }, 300);
+        }, 150);
     }
 
     // Handles the end boss's reaction to being hit by a bottle, updating their behavior state.
@@ -294,7 +299,7 @@ class World {
     }
 
     // Checks for collisions between the character and enemies, allowing the character to jump on enemies or take damage.
-    checkJumpOnEnemies() {
+    checkCollisionsWithEnemies() {
         if (this.character.y < 110) {
             this.lastJumpTime = true;
         }
@@ -307,7 +312,7 @@ class World {
             if (this.character.isColliding(enemy)) {
                 if (this.character.isAboveGround()) {
                     if (this.lastJumpTime == true) {
-                        this.killChicken(enemy, index);
+                        this.killEnemy(enemy, index);
                         this.lastJumpTime = false;
                         this.lastJump = true;
                     }
@@ -318,7 +323,7 @@ class World {
 
                 setTimeout(() => {
                     this.lastJump = false;
-                }, 700);
+                }, 500);
             }
         });
     }
