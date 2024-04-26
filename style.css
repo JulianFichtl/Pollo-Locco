@@ -274,7 +274,7 @@ button:hover {
     text-align: center;
 }
 
-@media only screen and (max-width: 720px) {
+@media only screen and (max-width: 1000px) {
     #canvas {
         width: 100vw;
     }
